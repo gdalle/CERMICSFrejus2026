@@ -11,14 +11,21 @@
     "href": "autodiff.html",
     "title": "Autodiff",
     "section": "",
-    "text": "Definition of derivative\nMotivation\nDifferentiable programming\n\n\n\n\n\nManual\nSymbolic\nNumeric\nAlgorithmic\nComputational graph"
+    "text": "Baydin, Atilim Gunes, Barak A. Pearlmutter, Alexey Andreyevich Radul, and Jeffrey Mark Siskind. 2018. “Automatic Differentiation in Machine Learning: A Survey.” Journal of Machine Learning Research 18 (153): 1–43. http://jmlr.org/papers/v18/17-468.html.\n\n\nBradbury, James, Roy Frostig, Peter Hawkins, et al. 2018. JAX: Composable Transformations of Python+NumPy Programs. V. 0.3.13. Released. http://github.com/google/jax.\n\n\nHückelheim, Jan, Harshitha Menon, William Moses, Bruce Christianson, Paul Hovland, and Laurent Hascoët. 2023. “Understanding Automatic Differentiation Pitfalls.” Pre-published May 12. https://doi.org/10.48550/arXiv.2305.07546.\n\n\nMargossian, Charles C. 2019. “A Review of Automatic Differentiation and Its Efficient Implementation.” WIREs Data Mining and Knowledge Discovery 9 (4): e1305. https://doi.org/10.1002/widm.1305."
+  },
+  {
+    "objectID": "autodiff.html#sources",
+    "href": "autodiff.html#sources",
+    "title": "Autodiff",
+    "section": "",
+    "text": "Baydin, Atilim Gunes, Barak A. Pearlmutter, Alexey Andreyevich Radul, and Jeffrey Mark Siskind. 2018. “Automatic Differentiation in Machine Learning: A Survey.” Journal of Machine Learning Research 18 (153): 1–43. http://jmlr.org/papers/v18/17-468.html.\n\n\nBradbury, James, Roy Frostig, Peter Hawkins, et al. 2018. JAX: Composable Transformations of Python+NumPy Programs. V. 0.3.13. Released. http://github.com/google/jax.\n\n\nHückelheim, Jan, Harshitha Menon, William Moses, Bruce Christianson, Paul Hovland, and Laurent Hascoët. 2023. “Understanding Automatic Differentiation Pitfalls.” Pre-published May 12. https://doi.org/10.48550/arXiv.2305.07546.\n\n\nMargossian, Charles C. 2019. “A Review of Automatic Differentiation and Its Efficient Implementation.” WIREs Data Mining and Knowledge Discovery 9 (4): e1305. https://doi.org/10.1002/widm.1305."
   },
   {
     "objectID": "autodiff.html#how-to-differentiate",
     "href": "autodiff.html#how-to-differentiate",
     "title": "Autodiff",
-    "section": "",
-    "text": "Definition of derivative\nMotivation\nDifferentiable programming\n\n\n\n\n\nManual\nSymbolic\nNumeric\nAlgorithmic\nComputational graph"
+    "section": "How to differentiate",
+    "text": "How to differentiate\n\nBasics\n\nDefinition of derivative\nMotivation\nDifferentiable programming\n\n\n\nThe four horsemen\n\nManual\nSymbolic\nNumeric\nAlgorithmic\nComputational graph"
   },
   {
     "objectID": "autodiff.html#the-modes-of-ad",
