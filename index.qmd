@@ -2,4 +2,4 @@
 title: "Computational tools for decision-focused learning"
 ---
 
-
+This page contains material for two sessions of a summer school organized by CERMICS in Fréjus in 2026.
