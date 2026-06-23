@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -111,8 +130,35 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#writing-gpu-kernels" id="toc-writing-gpu-kernels" class="nav-link" data-scroll-target="#writing-gpu-kernels">Writing GPU kernels</a></li>
+  <li><a href="#sparse-matrices-and-graphs" id="toc-sparse-matrices-and-graphs" class="nav-link" data-scroll-target="#sparse-matrices-and-graphs">Sparse matrices and graphs</a></li>
+  <li><a href="#linear-and-integer-programming" id="toc-linear-and-integer-programming" class="nav-link" data-scroll-target="#linear-and-integer-programming">Linear and integer programming</a></li>
+  <li><a href="#local-search" id="toc-local-search" class="nav-link" data-scroll-target="#local-search">Local search</a></li>
+  <li><a href="#julia-tooling" id="toc-julia-tooling" class="nav-link" data-scroll-target="#julia-tooling">Julia tooling</a>
+  <ul class="collapse">
+  <li><a href="#cuda-specific-code" id="toc-cuda-specific-code" class="nav-link" data-scroll-target="#cuda-specific-code">CUDA-specific code</a></li>
+  <li><a href="#hardware-agnostic-code" id="toc-hardware-agnostic-code" class="nav-link" data-scroll-target="#hardware-agnostic-code">Hardware-agnostic code</a></li>
+  <li><a href="#deep-learning" id="toc-deep-learning" class="nav-link" data-scroll-target="#deep-learning">Deep learning</a></li>
+  <li><a href="#mathematical-programming" id="toc-mathematical-programming" class="nav-link" data-scroll-target="#mathematical-programming">Mathematical programming</a></li>
+  <li><a href="#graph-algorithms" id="toc-graph-algorithms" class="nav-link" data-scroll-target="#graph-algorithms">Graph algorithms</a></li>
+  </ul></li>
+  <li><a href="#python-tooling" id="toc-python-tooling" class="nav-link" data-scroll-target="#python-tooling">Python tooling</a>
+  <ul class="collapse">
+  <li><a href="#cuda-specific-code-1" id="toc-cuda-specific-code-1" class="nav-link" data-scroll-target="#cuda-specific-code-1">CUDA-specific code</a></li>
+  <li><a href="#hardware-agnostic-code-1" id="toc-hardware-agnostic-code-1" class="nav-link" data-scroll-target="#hardware-agnostic-code-1">Hardware-agnostic code</a></li>
+  <li><a href="#deep-learning-1" id="toc-deep-learning-1" class="nav-link" data-scroll-target="#deep-learning-1">Deep learning</a></li>
+  <li><a href="#mathematical-programming-1" id="toc-mathematical-programming-1" class="nav-link" data-scroll-target="#mathematical-programming-1">Mathematical programming</a></li>
+  <li><a href="#graph-algorithms-1" id="toc-graph-algorithms-1" class="nav-link" data-scroll-target="#graph-algorithms-1">Graph algorithms</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -136,10 +182,178 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+</section>
+<section id="writing-gpu-kernels" class="level2">
+<h2 class="anchored" data-anchor-id="writing-gpu-kernels">Writing GPU kernels</h2>
+</section>
+<section id="sparse-matrices-and-graphs" class="level2">
+<h2 class="anchored" data-anchor-id="sparse-matrices-and-graphs">Sparse matrices and graphs</h2>
+</section>
+<section id="linear-and-integer-programming" class="level2">
+<h2 class="anchored" data-anchor-id="linear-and-integer-programming">Linear and integer programming</h2>
+</section>
+<section id="local-search" class="level2">
+<h2 class="anchored" data-anchor-id="local-search">Local search</h2>
+</section>
+<section id="julia-tooling" class="level2">
+<h2 class="anchored" data-anchor-id="julia-tooling">Julia tooling</h2>
+<section id="cuda-specific-code" class="level3">
+<h3 class="anchored" data-anchor-id="cuda-specific-code">CUDA-specific code</h3>
+<ul>
+<li><a href="https://github.com/JuliaGPU/CUDA.jl">CUDA.jl</a></li>
+<li>Math libraries: cuBLAS.jl, cuSPARSE.jl, etc.</li>
+<li><a href="https://github.com/JuliaGPU/cuTile.jl">cuTile.jl</a></li>
+</ul>
+</section>
+<section id="hardware-agnostic-code" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-agnostic-code">Hardware-agnostic code</h3>
+<ul>
+<li><a href="https://github.com/JuliaGPU/GPUArrays.jl">GPUArrays.jl</a></li>
+<li><a href="https://github.com/JuliaGPU/KernelAbstractions.jl">KernelAbstractions.jl</a></li>
+<li><a href="https://github.com/JuliaGPU/AcceleratedKernels.jl">AcceleratedKernels.jl</a></li>
+<li><a href="https://github.com/EnzymeAD/Reactant.jl">Reactant.jl</a></li>
+</ul>
+</section>
+<section id="deep-learning" class="level3">
+<h3 class="anchored" data-anchor-id="deep-learning">Deep learning</h3>
+<ul>
+<li><a href="https://github.com/EnzymeAd/Enzyme.jl">Enzyme.jl</a></li>
+<li><a href="https://github.com/LuxDL/Lux.jl">Lux.jl</a></li>
+</ul>
+</section>
+<section id="mathematical-programming" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-programming">Mathematical programming</h3>
+<p>Modeling:</p>
+<ul>
+<li><a href="https://github.com/jump-dev/JuMP.jl">JuMP.jl</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><a href="https://github.com/exanauts/ExaModels.jl">ExaModels.jl</a></li>
+</ul>
+<p>Solvers:</p>
+<ul>
+<li><a href="https://github.com/JuliaDecisionFocusedLearning/CoolPDLP.jl">CoolPDLP.jl</a></li>
+<li><a href="https://github.com/jump-dev/cuOpt.jl">cuOpt.jl</a></li>
+<li><a href="https://github.com/MIT-Lu-Lab/CuPDLPx.jl">cuPDLPx.jl</a></li>
+<li><a href="https://github.com/MadNLP/MadNLP.jl">MadNLP.jl</a></li>
+</ul>
+</section>
+<section id="graph-algorithms" class="level3">
+<h3 class="anchored" data-anchor-id="graph-algorithms">Graph algorithms</h3>
+<p>Not much… yet.</p>
+</section>
+</section>
+<section id="python-tooling" class="level2">
+<h2 class="anchored" data-anchor-id="python-tooling">Python tooling</h2>
+<section id="cuda-specific-code-1" class="level3">
+<h3 class="anchored" data-anchor-id="cuda-specific-code-1">CUDA-specific code</h3>
+<ul>
+<li><a href="https://github.com/cupy/cupy">cupy</a></li>
+<li><a href="https://github.com/NVIDIA/nvmath-python">nvmath-python</a></li>
+<li><a href="https://github.com/nvidia/cutile-python">cutile-python</a></li>
+</ul>
+</section>
+<section id="hardware-agnostic-code-1" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-agnostic-code-1">Hardware-agnostic code</h3>
+<ul>
+<li><a href="https://github.com/data-apis/array-api/">Array API</a></li>
+<li><a href="https://github.com/dmlc/dlpack">DLPack</a></li>
+<li><a href="https://github.com/numba/numba">numba</a></li>
+<li><a href="https://github.com/triton-lang/triton">triton</a></li>
+<li><a href="https://docs.jax.dev/en/latest/pallas/index.html">Pallas</a></li>
+</ul>
+</section>
+<section id="deep-learning-1" class="level3">
+<h3 class="anchored" data-anchor-id="deep-learning-1">Deep learning</h3>
+<ul>
+<li><a href="https://github.com/pytorch/pytorch">PyTorch</a></li>
+<li><a href="https://github.com/jax-ml/jax">JAX</a></li>
+</ul>
+</section>
+<section id="mathematical-programming-1" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-programming-1">Mathematical programming</h3>
+<p>Modeling:</p>
+<ul>
+<li><a href="https://github.com/cvxpy/cvxpy/">cvxpy</a></li>
+<li><a href="https://github.com/pyomo/pyomo">pyomo</a></li>
+</ul>
+<p>Solvers:</p>
+<ul>
+<li><a href="https://github.com/NVIDIA/cuopt">cuopt</a></li>
+<li><a href="https://github.com/MIT-Lu-Lab/MPAX">MPAX</a></li>
+</ul>
+</section>
+<section id="graph-algorithms-1" class="level3">
+<h3 class="anchored" data-anchor-id="graph-algorithms-1">Graph algorithms</h3>
+<ul>
+<li><a href="https://github.com/networkx/networkx">networkx</a></li>
+<li><a href="https://github.com/rapidsai/cugraph">cugraph</a></li>
+</ul>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-applegatePracticalLargeScaleLinear2021" class="csl-entry" role="listitem">
+Applegate, David, Mateo Diaz Diaz, Oliver Hinder, et al. 2021. <span>“Practical <span>Large-Scale Linear Programming</span> Using <span>Primal-Dual Hybrid Gradient</span>.”</span> Paper presented Thirty-<span>Fifth Conference</span> on <span>Neural Information Processing Systems</span>. May 21. <a href="https://openreview.net/forum?id=_eXwwWOyqT_">https://openreview.net/forum?id=_eXwwWOyqT_</a>.
+</div>
+<div id="ref-besardEffectiveExtensibleProgramming2019" class="csl-entry" role="listitem">
+Besard, Tim, Christophe Foket, and Bjorn De Sutter. 2019. <span>“Effective <span>Extensible Programming</span>: <span>Unleashing Julia</span> on <span>GPUs</span>.”</span> <em>IEEE Transactions on Parallel and Distributed Systems</em> 30 (4): 827–41. <a href="https://doi.org/10.1109/TPDS.2018.2872064">https://doi.org/10.1109/TPDS.2018.2872064</a>.
+</div>
+<div id="ref-blinBatchedFirstOrderMethods2026" class="csl-entry" role="listitem">
+Blin, Nicolas, Stefano Gualandi, Christopher Maes, Andrea Lodi, and Bartolomeo Stellato. 2026. <span>“Batched <span>First-Order Methods</span> for <span>Parallel LP Solving</span> in <span>MIP</span>.”</span> Version 1. Pre-published. <a href="https://doi.org/10.48550/ARXIV.2601.21990">https://doi.org/10.48550/ARXIV.2601.21990</a>.
+</div>
+<div id="ref-dellingPHASTHardwareacceleratedShortest2013" class="csl-entry" role="listitem">
+Delling, Daniel, Andrew V. Goldberg, Andreas Nowatzyk, and Renato F. Werneck. 2013. <span>“<span>PHAST</span>: <span class="nocase">Hardware-accelerated</span> Shortest Path Trees.”</span> <em>Journal of Parallel and Distributed Computing</em>, Best <span>Papers</span>: <span>International Parallel</span> and <span>Distributed Processing Symposium</span> (<span>IPDPS</span>) 2010, 2011 and 2012, vol. 73 (7): 940–52. <a href="https://doi.org/10.1016/j.jpdc.2012.02.007">https://doi.org/10.1016/j.jpdc.2012.02.007</a>.
+</div>
+<div id="ref-hijmaOptimizationTechniquesGPU2023" class="csl-entry" role="listitem">
+Hijma, Pieter, Stijn Heldens, Alessio Sclocco, Ben van Werkhoven, and Henri E. Bal. 2023. <span>“Optimization <span>Techniques</span> for <span>GPU Programming</span>.”</span> <em>ACM Comput. Surv.</em> 55 (11): 239:1–81. <a href="https://doi.org/10.1145/3570638">https://doi.org/10.1145/3570638</a>.
+</div>
+<div id="ref-hwuProgrammingMassivelyParallel2022" class="csl-entry" role="listitem">
+Hwu, Wen-mei W., David B. Kirk, and Izzat El Hajj. 2022. <em>Programming <span>Massively Parallel Processors</span>: <span class="nocase">A Hands-on Approach</span></em>. Morgan Kaufmann. <a href="https://books.google.com?id=7H9dEAAAQBAJ">https://books.google.com?id=7H9dEAAAQBAJ</a>.
+</div>
+<div id="ref-luMPAXMathematicalProgramming2024" class="csl-entry" role="listitem">
+Lu, Haihao, Zedong Peng, and Jinwen Yang. 2024. <span>“<span>MPAX</span>: <span>Mathematical Programming</span> in <span>JAX</span>.”</span> Pre-published December 12. <a href="https://doi.org/10.48550/arXiv.2412.09734">https://doi.org/10.48550/arXiv.2412.09734</a>.
+</div>
+<div id="ref-luOverviewGPUbasedFirstOrder2025" class="csl-entry" role="listitem">
+Lu, Haihao, and Jinwen Yang. 2025a. <span>“An <span>Overview</span> of <span class="nocase">GPU-based First-Order Methods</span> for <span>Linear Programming</span> and <span>Extensions</span>.”</span> Pre-published June 2. <a href="https://doi.org/10.48550/arXiv.2506.02174">https://doi.org/10.48550/arXiv.2506.02174</a>.
+</div>
+<div id="ref-luCuPDLPjlGPUImplementation2025" class="csl-entry" role="listitem">
+Lu, Haihao, and Jinwen Yang. 2025b. <span>“<span class="nocase">cuPDLP</span>.jl: <span>A GPU Implementation</span> of <span>Restarted Primal-Dual Hybrid Gradient</span> for <span>Linear Programming</span> in <span>Julia</span>.”</span> <em>Operations Research</em> 73 (6): 3440–52. <a href="https://doi.org/10.1287/opre.2024.1069">https://doi.org/10.1287/opre.2024.1069</a>.
+</div>
+<div id="ref-merckxBuildingBridgesJulia2025" class="csl-entry" role="listitem">
+Merckx, Jules. 2025. <span>“Building <span>Bridges</span>: <span>Julia</span> as an <span>MLIR Frontend</span>.”</span> Pre-published February 14. <a href="https://doi.org/10.48550/arXiv.2503.04771">https://doi.org/10.48550/arXiv.2503.04771</a>.
+</div>
+<div id="ref-nicusanAcceleratedKernelsjlCrossArchitectureParallel2025" class="csl-entry" role="listitem">
+Nicusan, Andrei-Leonard, Dominik Werner, Simon Branford, Simon Hartley, Andrew J. Morris, and Kit Windows-Yule. 2025. <span>“<span>AcceleratedKernels</span>.jl: <span>Cross-Architecture Parallel Algorithms</span> from a <span>Unified</span>, <span>Transpiled Codebase</span>.”</span> Pre-published July 22. <a href="https://doi.org/10.48550/arXiv.2507.16710">https://doi.org/10.48550/arXiv.2507.16710</a>.
+</div>
+<div id="ref-perumallaDesignConsiderationsGPUbased2021" class="csl-entry" role="listitem">
+Perumalla, Kalyan, and Maksudul Alam. 2021. <span>“Design <span>Considerations</span> for <span class="nocase">GPU-based Mixed Integer Programming</span> on <span>Parallel Computing Platforms</span>.”</span> (New York, NY, USA), <span>ICPP Workshops</span> ’21, September 23, 1–7. <a href="https://doi.org/10.1145/3458744.3473366">https://doi.org/10.1145/3458744.3473366</a>.
+</div>
+<div id="ref-shinAcceleratingOptimalPower2024" class="csl-entry" role="listitem">
+Shin, Sungho, François Pacaud, and Mihai Anitescu. 2024. <span>“Accelerating <span>Optimal Power Flow</span> with <span>GPUs</span>: <span>SIMD Abstraction</span> of <span>Nonlinear Programs</span> and <span>Condensed-Space Interior-Point Methods</span>.”</span> Pre-published February 26. <a href="http://arxiv.org/abs/2307.16830">http://arxiv.org/abs/2307.16830</a>.
+</div>
+<div id="ref-sountsovRunningMarkovChain2024" class="csl-entry" role="listitem">
+Sountsov, Pavel, Colin Carroll, and Matthew D. Hoffman. 2024. <span>“Running <span>Markov Chain Monte Carlo</span> on <span>Modern Hardware</span> and <span>Software</span>.”</span> Pre-published November 6. <a href="https://doi.org/10.48550/arXiv.2411.04260">https://doi.org/10.48550/arXiv.2411.04260</a>.
+</div>
+<div id="ref-tjusilaCHAPHybridGPUCPU2026" class="csl-entry" role="listitem">
+Tjusila, Gennesaret Kharistio, Alexander Hoen, Nils-Christian Kempke, et al. 2026. <span>“<span>CHAP</span>: <span>A Hybrid GPU-CPU Heuristic</span> for <span>MIP</span>.”</span> Version 1. Pre-published. <a href="https://doi.org/10.48550/ARXIV.2605.05086">https://doi.org/10.48550/ARXIV.2605.05086</a>.
+</div>
+<div id="ref-zhaoGPUbasedSplitAlgorithm2025" class="csl-entry" role="listitem">
+Zhao, Jingyi, Linxin Yang, Haohua Zhang, and Tian Ding. 2025. <span>“<span class="nocase">GPU-based Split</span> Algorithm for <span>Large-Scale CVRPSD</span>.”</span> Version 1. Pre-published. <a href="https://doi.org/10.48550/ARXIV.2511.18022">https://doi.org/10.48550/ARXIV.2511.18022</a>.
+</div>
+</div>
 
 
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>see the <a href="https://github.com/jump-dev/MathOptInterface.jl/issues/2904">batching issue</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
