@@ -77,6 +77,13 @@
     "text": "Local search"
   },
   {
+    "objectID": "gpu.html#where-to-run-code",
+    "href": "gpu.html#where-to-run-code",
+    "title": "GPU",
+    "section": "Where to run code?",
+    "text": "Where to run code?\n\nOn your laptop\n\nif your code is hardware-agnostic\nor if you have a (compatible) GPU\n\nOn the ENPC cluster, see instructions here (private repo)\nOn a Google Colab notebook"
+  },
+  {
     "objectID": "gpu.html#julia-tooling",
     "href": "gpu.html#julia-tooling",
     "title": "GPU",
