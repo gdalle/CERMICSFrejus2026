@@ -2,3 +2,73 @@
 title: "Autodiff"
 ---
 
+## How to differentiate
+
+### Basics
+
+- Definition of derivative
+- Motivation
+- Differentiable programming
+
+### The four horsemen
+
+- Manual
+- Symbolic
+- Numeric
+- Algorithmic
+- Computational graph
+
+## The modes of AD
+
+### Forward mode
+
+- Linear maps
+- Chain rule
+- Link with matrices
+- Examples
+
+### Reverse mode
+
+- Adjoint linear maps
+- Reverse chain rule
+- Link with transposed matrices
+- Examples
+
+### Complexity
+
+- Time complexity
+- Space complexity
+- Checkpointing
+
+### Full matrices
+
+- Choosing a mode
+- Solving linear systems
+
+## Implementation
+
+### Principles
+
+- Non-standard interpretation
+- Operator overloading
+- Source transformation
+
+### Software
+
+- Available libraries
+- Limitations
+
+## Going further
+
+### Challenges
+
+- Branches, loops
+- Non-smooth functions
+- Approximations
+- Solvers as layers
+
+### Solutions
+
+- Writing rules
+- Implicit function theorem for continuous optimization layers
+- Smoothing for discrete optimization layers
