@@ -111,8 +111,35 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-to-differentiate" id="toc-how-to-differentiate" class="nav-link active" data-scroll-target="#how-to-differentiate">How to differentiate</a>
+  <ul class="collapse">
+  <li><a href="#basics" id="toc-basics" class="nav-link" data-scroll-target="#basics">Basics</a></li>
+  <li><a href="#the-four-horsemen" id="toc-the-four-horsemen" class="nav-link" data-scroll-target="#the-four-horsemen">The four horsemen</a></li>
+  </ul></li>
+  <li><a href="#the-modes-of-ad" id="toc-the-modes-of-ad" class="nav-link" data-scroll-target="#the-modes-of-ad">The modes of AD</a>
+  <ul class="collapse">
+  <li><a href="#forward-mode" id="toc-forward-mode" class="nav-link" data-scroll-target="#forward-mode">Forward mode</a></li>
+  <li><a href="#reverse-mode" id="toc-reverse-mode" class="nav-link" data-scroll-target="#reverse-mode">Reverse mode</a></li>
+  <li><a href="#complexity" id="toc-complexity" class="nav-link" data-scroll-target="#complexity">Complexity</a></li>
+  <li><a href="#full-matrices" id="toc-full-matrices" class="nav-link" data-scroll-target="#full-matrices">Full matrices</a></li>
+  </ul></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a>
+  <ul class="collapse">
+  <li><a href="#principles" id="toc-principles" class="nav-link" data-scroll-target="#principles">Principles</a></li>
+  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software">Software</a></li>
+  </ul></li>
+  <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">Going further</a>
+  <ul class="collapse">
+  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
+  <li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions">Solutions</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -136,8 +163,103 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="how-to-differentiate" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-differentiate">How to differentiate</h2>
+<section id="basics" class="level3">
+<h3 class="anchored" data-anchor-id="basics">Basics</h3>
+<ul>
+<li>Definition of derivative</li>
+<li>Motivation</li>
+<li>Differentiable programming</li>
+</ul>
+</section>
+<section id="the-four-horsemen" class="level3">
+<h3 class="anchored" data-anchor-id="the-four-horsemen">The four horsemen</h3>
+<ul>
+<li>Manual</li>
+<li>Symbolic</li>
+<li>Numeric</li>
+<li>Algorithmic</li>
+<li>Computational graph</li>
+</ul>
+</section>
+</section>
+<section id="the-modes-of-ad" class="level2">
+<h2 class="anchored" data-anchor-id="the-modes-of-ad">The modes of AD</h2>
+<section id="forward-mode" class="level3">
+<h3 class="anchored" data-anchor-id="forward-mode">Forward mode</h3>
+<ul>
+<li>Linear maps</li>
+<li>Chain rule</li>
+<li>Link with matrices</li>
+<li>Examples</li>
+</ul>
+</section>
+<section id="reverse-mode" class="level3">
+<h3 class="anchored" data-anchor-id="reverse-mode">Reverse mode</h3>
+<ul>
+<li>Adjoint linear maps</li>
+<li>Reverse chain rule</li>
+<li>Link with transposed matrices</li>
+<li>Examples</li>
+</ul>
+</section>
+<section id="complexity" class="level3">
+<h3 class="anchored" data-anchor-id="complexity">Complexity</h3>
+<ul>
+<li>Time complexity</li>
+<li>Space complexity</li>
+<li>Checkpointing</li>
+</ul>
+</section>
+<section id="full-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="full-matrices">Full matrices</h3>
+<ul>
+<li>Choosing a mode</li>
+<li>Solving linear systems</li>
+</ul>
+</section>
+</section>
+<section id="implementation" class="level2">
+<h2 class="anchored" data-anchor-id="implementation">Implementation</h2>
+<section id="principles" class="level3">
+<h3 class="anchored" data-anchor-id="principles">Principles</h3>
+<ul>
+<li>Non-standard interpretation</li>
+<li>Operator overloading</li>
+<li>Source transformation</li>
+</ul>
+</section>
+<section id="software" class="level3">
+<h3 class="anchored" data-anchor-id="software">Software</h3>
+<ul>
+<li>Available libraries</li>
+<li>Limitations</li>
+</ul>
+</section>
+</section>
+<section id="going-further" class="level2">
+<h2 class="anchored" data-anchor-id="going-further">Going further</h2>
+<section id="challenges" class="level3">
+<h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
+<ul>
+<li>Branches, loops</li>
+<li>Non-smooth functions</li>
+<li>Approximations</li>
+<li>Solvers as layers</li>
+</ul>
+</section>
+<section id="solutions" class="level3">
+<h3 class="anchored" data-anchor-id="solutions">Solutions</h3>
+<ul>
+<li>Writing rules</li>
+<li>Implicit function theorem for continuous optimization layers</li>
+<li>Smoothing for discrete optimization layers</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

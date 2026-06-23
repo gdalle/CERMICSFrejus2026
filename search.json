@@ -5,5 +5,40 @@
     "title": "Computational tools for decision-focused learning",
     "section": "",
     "text": "This page contains material for two sessions of a summer school organized by CERMICS in Fréjus in 2026."
+  },
+  {
+    "objectID": "autodiff.html",
+    "href": "autodiff.html",
+    "title": "Autodiff",
+    "section": "",
+    "text": "Definition of derivative\nMotivation\nDifferentiable programming\n\n\n\n\n\nManual\nSymbolic\nNumeric\nAlgorithmic\nComputational graph"
+  },
+  {
+    "objectID": "autodiff.html#how-to-differentiate",
+    "href": "autodiff.html#how-to-differentiate",
+    "title": "Autodiff",
+    "section": "",
+    "text": "Definition of derivative\nMotivation\nDifferentiable programming\n\n\n\n\n\nManual\nSymbolic\nNumeric\nAlgorithmic\nComputational graph"
+  },
+  {
+    "objectID": "autodiff.html#the-modes-of-ad",
+    "href": "autodiff.html#the-modes-of-ad",
+    "title": "Autodiff",
+    "section": "The modes of AD",
+    "text": "The modes of AD\n\nForward mode\n\nLinear maps\nChain rule\nLink with matrices\nExamples\n\n\n\nReverse mode\n\nAdjoint linear maps\nReverse chain rule\nLink with transposed matrices\nExamples\n\n\n\nComplexity\n\nTime complexity\nSpace complexity\nCheckpointing\n\n\n\nFull matrices\n\nChoosing a mode\nSolving linear systems"
+  },
+  {
+    "objectID": "autodiff.html#implementation",
+    "href": "autodiff.html#implementation",
+    "title": "Autodiff",
+    "section": "Implementation",
+    "text": "Implementation\n\nPrinciples\n\nNon-standard interpretation\nOperator overloading\nSource transformation\n\n\n\nSoftware\n\nAvailable libraries\nLimitations"
+  },
+  {
+    "objectID": "autodiff.html#going-further",
+    "href": "autodiff.html#going-further",
+    "title": "Autodiff",
+    "section": "Going further",
+    "text": "Going further\n\nChallenges\n\nBranches, loops\nNon-smooth functions\nApproximations\nSolvers as layers\n\n\n\nSolutions\n\nWriting rules\nImplicit function theorem for continuous optimization layers\nSmoothing for discrete optimization layers"
   }
 ]
