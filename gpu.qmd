@@ -13,6 +13,14 @@ bibliography: gpu.bib
 
 ## Local search
 
+## Where to run code?
+
+- On your laptop
+  - if your code is hardware-agnostic
+  - or if you have a (compatible) GPU
+- On the ENPC cluster, see instructions [here](https://github.com/cermics/cluster/blob/main/shared_cluster.md) (private repo)
+- On a [Google Colab](https://colab.research.google.com/) notebook
+
 ## Julia tooling
 
 ### CUDA-specific code
