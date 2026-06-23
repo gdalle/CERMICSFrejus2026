@@ -1,4 +1,102 @@
 ---
 title: "GPU"
+bibliography: gpu.bib
 ---
 
+## Introduction
+
+## Writing GPU kernels
+
+## Sparse matrices and graphs
+
+## Linear and integer programming
+
+## Local search
+
+## Julia tooling
+
+### CUDA-specific code
+
+- [CUDA.jl](https://github.com/JuliaGPU/CUDA.jl)
+- Math libraries: cuBLAS.jl, cuSPARSE.jl, etc.
+- [cuTile.jl](https://github.com/JuliaGPU/cuTile.jl)
+
+### Hardware-agnostic code
+
+- [GPUArrays.jl](https://github.com/JuliaGPU/GPUArrays.jl)
+- [KernelAbstractions.jl](https://github.com/JuliaGPU/KernelAbstractions.jl)
+- [AcceleratedKernels.jl](https://github.com/JuliaGPU/AcceleratedKernels.jl)
+- [Reactant.jl](https://github.com/EnzymeAD/Reactant.jl)
+
+### Deep learning
+
+- [Enzyme.jl](https://github.com/EnzymeAd/Enzyme.jl)
+- [Lux.jl](https://github.com/LuxDL/Lux.jl)
+
+### Mathematical programming
+
+Modeling:
+
+- [JuMP.jl](https://github.com/jump-dev/JuMP.jl)[^1]
+- [ExaModels.jl](https://github.com/exanauts/ExaModels.jl)
+
+[^1]: see the [batching issue](https://github.com/jump-dev/MathOptInterface.jl/issues/2904)
+
+Solvers:
+
+- [CoolPDLP.jl](https://github.com/JuliaDecisionFocusedLearning/CoolPDLP.jl)
+- [cuOpt.jl](https://github.com/jump-dev/cuOpt.jl)
+- [cuPDLPx.jl](https://github.com/MIT-Lu-Lab/CuPDLPx.jl)
+- [MadNLP.jl](https://github.com/MadNLP/MadNLP.jl)
+
+### Graph algorithms
+
+Not much... yet.
+
+## Python tooling
+
+### CUDA-specific code
+
+- [cupy](https://github.com/cupy/cupy)
+- [nvmath-python](https://github.com/NVIDIA/nvmath-python)
+- [cutile-python](https://github.com/nvidia/cutile-python)
+
+### Hardware-agnostic code
+
+- [Array API](https://github.com/data-apis/array-api/)
+- [DLPack](https://github.com/dmlc/dlpack)
+- [numba](https://github.com/numba/numba)
+- [triton](https://github.com/triton-lang/triton)
+- [Pallas](https://docs.jax.dev/en/latest/pallas/index.html)
+
+### Deep learning
+
+- [PyTorch](https://github.com/pytorch/pytorch)
+- [JAX](https://github.com/jax-ml/jax)
+
+### Mathematical programming
+
+Modeling:
+
+- [cvxpy](https://github.com/cvxpy/cvxpy/) 
+- [pyomo](https://github.com/pyomo/pyomo)
+
+Solvers:
+
+- [cuopt](https://github.com/NVIDIA/cuopt)
+- [MPAX](https://github.com/MIT-Lu-Lab/MPAX)
+
+### Graph algorithms
+
+- [networkx](https://github.com/networkx/networkx)
+- [cugraph](https://github.com/rapidsai/cugraph)
+
+## References
+
+---
+nocite: |
+  @*
+---
+
+::: {#refs}
+:::

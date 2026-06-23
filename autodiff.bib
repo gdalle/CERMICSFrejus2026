@@ -20,6 +20,38 @@
   version = {0.3.13}
 }
 
+@article{gebremedhinWhatColorYour2005,
+  title = {What {{Color Is Your Jacobian}}? {{Graph Coloring}} for {{Computing Derivatives}}},
+  shorttitle = {What {{Color Is Your Jacobian}}?},
+  author = {Gebremedhin, Assefaw Hadish and Manne, Fredrik and Pothen, Alex},
+  date = {2005-01-01},
+  journaltitle = {SIAM Review},
+  shortjournal = {SIAM Rev.},
+  volume = {47},
+  number = {4},
+  pages = {629--705},
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  issn = {0036-1445},
+  doi = {10/cmwds4},
+  url = {https://epubs.siam.org/doi/abs/10.1137/S0036144504444711},
+  abstract = {Graph coloring has been employed since the 1980s to efficiently compute sparse Jacobian and Hessian matrices using either finite differences or automatic differentiation. Several coloring problems occur in this context, depending on whether the matrix is a Jacobian or a Hessian, and on the specifics of the computational techniques employed. We consider eight variant vertex coloring problems here. This article begins with a gentle introduction to the problem of computing a sparse Jacobian, followed by an overview of the historical development of the research area. Then we present a unifying framework for the graph models of the variant matrix estimation problems. The framework is based upon the viewpoint that a partition of a matrix into structurally orthogonal groups of columns corresponds to distance-2 coloring an appropriate graph representation. The unified framework helps integrate earlier work and leads to fresh insights; enables the design of more efficient algorithms for many problems; leads to new algorithms for others; and eases the task of building graph models for new problems. We report computational results on two of the coloring problems to support our claims. Most of the methods for these problems treat a column or a row of a matrix as an atomic entity, and partition the columns or rows (or both). A brief review of methods that do not fit these criteria is provided. We also discuss results in discrete mathematics and theoretical computer science that intersect with the topics considered here.}
+}
+
+@article{huckelheimTaxonomyAutomaticDifferentiation2024,
+  title = {A Taxonomy of Automatic Differentiation Pitfalls},
+  author = {Hückelheim, Jan and Menon, Harshitha and Moses, William and Christianson, Bruce and Hovland, Paul and Hascoët, Laurent},
+  date = {2024},
+  journaltitle = {WIREs Data Mining and Knowledge Discovery},
+  volume = {14},
+  number = {6},
+  pages = {e1555},
+  issn = {1942-4795},
+  doi = {10.1002/widm.1555},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/widm.1555},
+  abstract = {Automatic differentiation is a popular technique for computing derivatives of computer programs. While automatic differentiation has been successfully used in countless engineering, science, and machine learning applications, it can sometimes nevertheless produce surprising results. In this paper, we categorize problematic usages of automatic differentiation, and illustrate each category with examples such as chaos, time-averages, discretizations, fixed-point loops, lookup tables, linear solvers, and probabilistic programs, in the hope that readers may more easily avoid or detect such pitfalls. We also review debugging techniques and their effectiveness in these situations. This article is categorized under: Technologies {$>$} Machine Learning},
+  langid = {english}
+}
+
 @online{huckelheimUnderstandingAutomaticDifferentiation2023,
   title = {Understanding {{Automatic Differentiation Pitfalls}}},
   author = {Hückelheim, Jan and Menon, Harshitha and Moses, William and Christianson, Bruce and Hovland, Paul and Hascoët, Laurent},
@@ -45,4 +77,17 @@
   url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/widm.1305},
   abstract = {Derivatives play a critical role in computational statistics, examples being Bayesian inference using Hamiltonian Monte Carlo sampling and the training of neural networks. Automatic differentiation (AD) is a powerful tool to automate the calculation of derivatives and is preferable to more traditional methods, especially when differentiating complex algorithms and mathematical functions. The implementation of AD, however, requires some care to insure efficiency. Modern differentiation packages deploy a broad range of computational techniques to improve applicability, run time, and memory management. Among these techniques are operation overloading, region-based memory, and expression templates. There also exist several mathematical techniques which can yield high performance gains when applied to complex algorithms. For example, semi-analytical derivatives can reduce by orders of magnitude the runtime required to numerically solve and differentiate an algebraic equation. Open and practical problems include the extension of current packages to provide more specialized routines, and finding optimal methods to perform higher-order differentiation. This article is categorized under: Algorithmic Development {$>$} Scalable Statistical Methods},
   langid = {english}
+}
+
+@article{mohamedMonteCarloGradient2020,
+  title = {Monte {{Carlo Gradient Estimation}} in {{Machine Learning}}},
+  author = {Mohamed, Shakir and Rosca, Mihaela and Figurnov, Michael and Mnih, Andriy},
+  date = {2020},
+  journaltitle = {Journal of Machine Learning Research},
+  volume = {21},
+  number = {132},
+  pages = {1--62},
+  issn = {1533-7928},
+  url = {http://jmlr.org/papers/v21/19-346.html},
+  abstract = {This paper is a broad and accessible survey of the methods we have at our disposal for Monte Carlo gradient estimation in machine learning and across the statistical sciences: the problem of computing the gradient of an expectation of a function with respect to parameters defining the distribution that is integrated; the problem of sensitivity analysis. In machine learning research, this gradient problem lies at the core of many learning problems, in supervised, unsupervised and reinforcement learning. We will generally seek to rewrite such gradients in a form that allows for Monte Carlo estimation, allowing them to be easily and efficiently used and analysed. We explore three strategies---the pathwise, score function, and measure-valued gradient estimators---exploring their historical development, derivation, and underlying assumptions. We describe their use in other fields, show how they are related and can be combined, and expand on their possible generalisations. Wherever Monte Carlo gradient estimators have been derived and deployed in the past, important advances have followed. A deeper and more widely-held understanding of this problem will lead to further advances, and it is these advances that we wish to support.}
 }
