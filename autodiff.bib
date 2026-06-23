@@ -1,0 +1,48 @@
+@article{baydinAutomaticDifferentiationMachine2018,
+  title = {Automatic {{Differentiation}} in {{Machine Learning}}: A {{Survey}}},
+  shorttitle = {Automatic {{Differentiation}} in {{Machine Learning}}},
+  author = {Baydin, Atilim Gunes and Pearlmutter, Barak A. and Radul, Alexey Andreyevich and Siskind, Jeffrey Mark},
+  date = {2018},
+  journaltitle = {Journal of Machine Learning Research},
+  volume = {18},
+  number = {153},
+  pages = {1--43},
+  issn = {1533-7928},
+  url = {http://jmlr.org/papers/v18/17-468.html},
+  abstract = {Derivatives, mostly in the form of gradients and Hessians, are ubiquitous in machine learning. Automatic differentiation (AD), also called algorithmic differentiation or simply "autodiff", is a family of techniques similar to but more general than backpropagation for efficiently and accurately evaluating derivatives of numeric functions expressed as computer programs. AD is a small but established field with applications in areas including computational fluid dynamics, atmospheric sciences, and engineering design optimization. Until very recently, the fields of machine learning and AD have largely been unaware of each other and, in some cases, have independently discovered each other's results. Despite its relevance, general-purpose AD has been missing from the machine learning toolbox, a situation slowly changing with its ongoing adoption under the names "dynamic computational graphs" and "differentiable programming". We survey the intersection of AD and machine learning, cover applications where AD has direct relevance, and address the main implementation techniques. By precisely defining the main differentiation techniques and their interrelationships, we aim to bring clarity to the usage of the terms "autodiff", "automatic differentiation", and "symbolic differentiation" as these are encountered more and more in machine learning settings.}
+}
+
+@software{bradburyJAXComposableTransformations2018,
+  title = {{{JAX}}: Composable Transformations of {{Python}}+{{NumPy}} Programs},
+  author = {Bradbury, James and Frostig, Roy and Hawkins, Peter and Johnson, Matthew James and Leary, Chris and Maclaurin, Dougal and Necula, George and Paszke, Adam and VanderPlas, Jake and Wanderman-Milne, Skye and Zhang, Qiao},
+  date = {2018},
+  url = {http://github.com/google/jax},
+  version = {0.3.13}
+}
+
+@online{huckelheimUnderstandingAutomaticDifferentiation2023,
+  title = {Understanding {{Automatic Differentiation Pitfalls}}},
+  author = {Hückelheim, Jan and Menon, Harshitha and Moses, William and Christianson, Bruce and Hovland, Paul and Hascoët, Laurent},
+  date = {2023-05-12},
+  eprint = {2305.07546},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.2305.07546},
+  url = {http://arxiv.org/abs/2305.07546},
+  abstract = {Automatic differentiation, also known as backpropagation, AD, autodiff, or algorithmic differentiation, is a popular technique for computing derivatives of computer programs accurately and efficiently. Sometimes, however, the derivatives computed by AD could be interpreted as incorrect. These pitfalls occur systematically across tools and approaches. In this paper we broadly categorize problematic usages of AD and illustrate each category with examples such as chaos, time-averaged oscillations, discretizations, fixed-point loops, lookup tables, and linear solvers. We also review debugging techniques and their effectiveness in these situations. With this article we hope to help readers avoid unexpected behavior, detect problems more easily when they occur, and have more realistic expectations from AD tools.},
+  pubstate = {prepublished}
+}
+
+@article{margossianReviewAutomaticDifferentiation2019,
+  title = {A Review of Automatic Differentiation and Its Efficient Implementation},
+  author = {Margossian, Charles C.},
+  date = {2019},
+  journaltitle = {WIREs Data Mining and Knowledge Discovery},
+  volume = {9},
+  number = {4},
+  pages = {e1305},
+  issn = {1942-4795},
+  doi = {10.1002/widm.1305},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/widm.1305},
+  abstract = {Derivatives play a critical role in computational statistics, examples being Bayesian inference using Hamiltonian Monte Carlo sampling and the training of neural networks. Automatic differentiation (AD) is a powerful tool to automate the calculation of derivatives and is preferable to more traditional methods, especially when differentiating complex algorithms and mathematical functions. The implementation of AD, however, requires some care to insure efficiency. Modern differentiation packages deploy a broad range of computational techniques to improve applicability, run time, and memory management. Among these techniques are operation overloading, region-based memory, and expression templates. There also exist several mathematical techniques which can yield high performance gains when applied to complex algorithms. For example, semi-analytical derivatives can reduce by orders of magnitude the runtime required to numerically solve and differentiate an algebraic equation. Open and practical problems include the extension of current packages to provide more specialized routines, and finding optimal methods to perform higher-order differentiation. This article is categorized under: Algorithmic Development {$>$} Scalable Statistical Methods},
+  langid = {english}
+}

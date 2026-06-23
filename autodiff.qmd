@@ -1,6 +1,17 @@
 ---
 title: "Autodiff"
+bibliography: autodiff.bib
 ---
+
+## Sources
+
+---
+nocite: |
+  @*
+---
+
+::: {#refs}
+:::
 
 ## How to differentiate
 
