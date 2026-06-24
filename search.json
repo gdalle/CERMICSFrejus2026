@@ -39,7 +39,14 @@
     "href": "autodiff.html#software",
     "title": "Autodiff",
     "section": "Software",
-    "text": "Software\n\nJulia libraries\nGeneral autodiff: see https://juliadiff.org/\n\nEnzyme.jl\nForwardDiff.jl\nMooncake.jl\nZygote.jl\n\nOptimization layers:\n\nImplicitDifferentiation.jl\nDiffOpt.jl\nInferOpt.jl\n\n\n\nPython libraries\nGeneral autodiff:\n\nJAX\nPyTorch\n\nOptimization layers:\n\nOptax\ntorchopt\ncvxpylayers\nPyEPO"
+    "text": "Software\n\nJulia libraries\nGeneral autodiff: see https://juliadiff.org/\n\nEnzyme.jl\nForwardDiff.jl\nMooncake.jl\nZygote.jl\n\nOptimization layers:\n\nImplicitDifferentiation.jl\nDiffOpt.jl\nInferOpt.jl\n\n\n\nPython libraries\nGeneral autodiff:\n\nJAX\nPyTorch\n\nOptimization layers:\n\nOptax\ntorchopt\ncvxpylayers\nPyEPO\nSoftJAX / SoftTorch"
+  },
+  {
+    "objectID": "autodiff.html#conclusion",
+    "href": "autodiff.html#conclusion",
+    "title": "Autodiff",
+    "section": "Conclusion",
+    "text": "Conclusion\n\nDon’t compute gradients by hand\nDefine a rule for any non-differentiable operation"
   },
   {
     "objectID": "autodiff.html#references",
@@ -47,6 +54,20 @@
     "title": "Autodiff",
     "section": "References",
     "text": "References\n\n\nBaydin, Atilim Gunes, Barak A. Pearlmutter, Alexey Andreyevich Radul, and Jeffrey Mark Siskind. 2018. “Automatic Differentiation in Machine Learning: A Survey.” Journal of Machine Learning Research 18 (153): 1–43. http://jmlr.org/papers/v18/17-468.html.\n\n\nBradbury, James, Roy Frostig, Peter Hawkins, et al. 2018. JAX: Composable Transformations of Python+NumPy Programs. V. 0.3.13. Released. http://github.com/google/jax.\n\n\nGebremedhin, Assefaw Hadish, Fredrik Manne, and Alex Pothen. 2005. “What Color Is Your Jacobian? Graph Coloring for Computing Derivatives.” SIAM Review 47 (4): 629–705. https://doi.org/10/cmwds4.\n\n\nHückelheim, Jan, Harshitha Menon, William Moses, Bruce Christianson, Paul Hovland, and Laurent Hascoët. 2023. “Understanding Automatic Differentiation Pitfalls.” Pre-published May 12. https://doi.org/10.48550/arXiv.2305.07546.\n\n\nHückelheim, Jan, Harshitha Menon, William Moses, Bruce Christianson, Paul Hovland, and Laurent Hascoët. 2024. “A Taxonomy of Automatic Differentiation Pitfalls.” WIREs Data Mining and Knowledge Discovery 14 (6): e1555. https://doi.org/10.1002/widm.1555.\n\n\nMargossian, Charles C. 2019. “A Review of Automatic Differentiation and Its Efficient Implementation.” WIREs Data Mining and Knowledge Discovery 9 (4): e1305. https://doi.org/10.1002/widm.1305.\n\n\nMohamed, Shakir, Mihaela Rosca, Michael Figurnov, and Andriy Mnih. 2020. “Monte Carlo Gradient Estimation in Machine Learning.” Journal of Machine Learning Research 21 (132): 1–62. http://jmlr.org/papers/v21/19-346.html."
+  },
+  {
+    "objectID": "gpu.html",
+    "href": "gpu.html",
+    "title": "GPU",
+    "section": "",
+    "text": "Initially designed for computer graphics\n2012: proof that they can be used in deep learning\nMost supercomputing capabilities are GPU-driven\n\n\n\n\n\nCPU: few cores, complex operations, low latency, large memory\nGPU: many cores, simple operations, high throughput, small memory\nCPU is the host, GPU is the device"
+  },
+  {
+    "objectID": "gpu.html#introduction",
+    "href": "gpu.html#introduction",
+    "title": "GPU",
+    "section": "",
+    "text": "Initially designed for computer graphics\n2012: proof that they can be used in deep learning\nMost supercomputing capabilities are GPU-driven\n\n\n\n\n\nCPU: few cores, complex operations, low latency, large memory\nGPU: many cores, simple operations, high throughput, small memory\nCPU is the host, GPU is the device"
   },
   {
     "objectID": "gpu.html#writing-gpu-kernels",
@@ -60,21 +81,14 @@
     "href": "gpu.html#sparse-matrices-and-graphs",
     "title": "GPU",
     "section": "Sparse matrices and graphs",
-    "text": "Sparse matrices and graphs"
+    "text": "Sparse matrices and graphs\n\nSparse matrix formats\n\nCOO\nCSC\nCSR\nSELL\nHybrid\n\n\n\nSpMV kernels\n\n\nChallenges\n\nLoad balancing\nAtomic operations\n\n\n\nGraph algorithms with linear algebra\n\nGraphBLAS specification\nCustom semirings\nExample: BFS"
   },
   {
     "objectID": "gpu.html#linear-and-integer-programming",
     "href": "gpu.html#linear-and-integer-programming",
     "title": "GPU",
     "section": "Linear and integer programming",
-    "text": "Linear and integer programming"
-  },
-  {
-    "objectID": "gpu.html#local-search",
-    "href": "gpu.html#local-search",
-    "title": "GPU",
-    "section": "Local search",
-    "text": "Local search"
+    "text": "Linear and integer programming\n\nAlgorithms for LP\n\nSimplex: variable-wise updates, linear solve\nInterior point: linear solve\nPrimal-dual methods: no linear solve\nVisualization on https://lpviz.net/\n\n\n\nWhat’s wrong with linear solves\n\nMemory overhead of the factorization\nSparse factorization and updates\nDoesn’t scale well on GPU\nNot necessarily the bottleneck\n\n\n\nPDLP\n\nFirst-order algorithm with primal and dual variables\nJust matrix-vector multiplications (SpMV)\nLow precision, high scalability\nOriginal CPU and GPU implementations in Julia (Google, then MIT)\n\n\n\nWhat makes it go brrrr\n\nPreconditioning\nRestarting\nAdaptive step size\nAveraging / reflection\nFeasibility polishing\n\n\n\nAreas of improvement\n\nPresolve\nCrossover\nHyperparameter tuning\n\n\n\nAlgorithms for MILP\n\nBranch & bound: very sequential\nCutting planes: very sequential\nPrimal heuristics: sometimes parallelizable\n\n\n\nGPU-friendly MILP heuristics\n\nPDLP as the relaxation solver\nFeasibility pump\nFix-and-propagate\nLarge neighborhood search\nCollaboration between CPU and GPU"
   },
   {
     "objectID": "gpu.html#where-to-run-code",
@@ -88,7 +102,7 @@
     "href": "gpu.html#julia-tooling",
     "title": "GPU",
     "section": "Julia tooling",
-    "text": "Julia tooling\n\nCUDA-specific code\n\nCUDA.jl\nMath libraries: cuBLAS.jl, cuSPARSE.jl, etc.\ncuTile.jl\n\n\n\nHardware-agnostic code\n\nGPUArrays.jl\nKernelAbstractions.jl\nAcceleratedKernels.jl\nReactant.jl\n\n\n\nDeep learning\n\nEnzyme.jl\nLux.jl\n\n\n\nMathematical programming\nModeling (including batched):\n\nJuMP.jl1\nConvex.jl\nExaModels.jl\nBatchNLPKernels.jl\nExperimental: BatchOptInterface.jl, BatchQuadraticModels.jl\n\nSolvers:\n\nClarabel.jl\nCoolPDLP.jl\ncuOpt.jl\ncuPDLPx.jl\nMadIPM.jl\nMadNLP.jl\nSCS.jl\n\n\n\nGraph algorithms\n\nRAPIDS.jl"
+    "text": "Julia tooling\n\nCUDA-specific code\n\nCUDA.jl\nMath libraries: cuBLAS.jl, cuSPARSE.jl, etc.\ncuTile.jl\n\n\n\nHardware-agnostic code\n\nGPUArrays.jl\nKernelAbstractions.jl\nAcceleratedKernels.jl\nReactant.jl\n\n\n\nDeep learning\n\nEnzyme.jl\nLux.jl\n\n\n\nMathematical programming\nModeling (including batched):\n\nJuMP.jl1\nConvex.jl\nExaModels.jl\nBatchNLPKernels.jl\nExperimental: BatchOptInterface.jl, BatchQuadraticModels.jl\n\nSolvers:\n\nClarabel.jl\nCoolPDLP.jl\ncuOpt.jl\ncuPDLPx.jl\nMadIPM.jl\nMadNLP.jl\nSCS.jl\n\n\n\nGraph algorithms\nNothing… yet"
   },
   {
     "objectID": "gpu.html#python-tooling",
@@ -102,7 +116,7 @@
     "href": "gpu.html#references",
     "title": "GPU",
     "section": "References",
-    "text": "References\n\n\nApplegate, David, Mateo Diaz Diaz, Oliver Hinder, et al. 2021. “Practical Large-Scale Linear Programming Using Primal-Dual Hybrid Gradient.” Paper presented Thirty-Fifth Conference on Neural Information Processing Systems. May 21. https://openreview.net/forum?id=_eXwwWOyqT_.\n\n\nBesard, Tim, Christophe Foket, and Bjorn De Sutter. 2019. “Effective Extensible Programming: Unleashing Julia on GPUs.” IEEE Transactions on Parallel and Distributed Systems 30 (4): 827–41. https://doi.org/10.1109/TPDS.2018.2872064.\n\n\nBlin, Nicolas, Stefano Gualandi, Christopher Maes, Andrea Lodi, and Bartolomeo Stellato. 2026. “Batched First-Order Methods for Parallel LP Solving in MIP.” Version 1. Pre-published. https://doi.org/10.48550/ARXIV.2601.21990.\n\n\nHijma, Pieter, Stijn Heldens, Alessio Sclocco, Ben van Werkhoven, and Henri E. Bal. 2023. “Optimization Techniques for GPU Programming.” ACM Comput. Surv. 55 (11): 239:1–81. https://doi.org/10.1145/3570638.\n\n\nHwu, Wen-mei W., David B. Kirk, and Izzat El Hajj. 2022. Programming Massively Parallel Processors: A Hands-on Approach. Morgan Kaufmann. https://books.google.com?id=7H9dEAAAQBAJ.\n\n\nLu, Haihao, Zedong Peng, and Jinwen Yang. 2024. “MPAX: Mathematical Programming in JAX.” Pre-published December 12. https://doi.org/10.48550/arXiv.2412.09734.\n\n\nLu, Haihao, and Jinwen Yang. 2025a. “An Overview of GPU-based First-Order Methods for Linear Programming and Extensions.” Pre-published June 2. https://doi.org/10.48550/arXiv.2506.02174.\n\n\nLu, Haihao, and Jinwen Yang. 2025b. “cuPDLP.jl: A GPU Implementation of Restarted Primal-Dual Hybrid Gradient for Linear Programming in Julia.” Operations Research 73 (6): 3440–52. https://doi.org/10.1287/opre.2024.1069.\n\n\nMerckx, Jules. 2025. “Building Bridges: Julia as an MLIR Frontend.” Pre-published February 14. https://doi.org/10.48550/arXiv.2503.04771.\n\n\nNicusan, Andrei-Leonard, Dominik Werner, Simon Branford, Simon Hartley, Andrew J. Morris, and Kit Windows-Yule. 2025. “AcceleratedKernels.jl: Cross-Architecture Parallel Algorithms from a Unified, Transpiled Codebase.” Pre-published July 22. https://doi.org/10.48550/arXiv.2507.16710.\n\n\nPerumalla, Kalyan, and Maksudul Alam. 2021. “Design Considerations for GPU-based Mixed Integer Programming on Parallel Computing Platforms.” (New York, NY, USA), ICPP Workshops ’21, September 23, 1–7. https://doi.org/10.1145/3458744.3473366.\n\n\nShin, Sungho, François Pacaud, and Mihai Anitescu. 2024. “Accelerating Optimal Power Flow with GPUs: SIMD Abstraction of Nonlinear Programs and Condensed-Space Interior-Point Methods.” Pre-published February 26. http://arxiv.org/abs/2307.16830.\n\n\nSountsov, Pavel, Colin Carroll, and Matthew D. Hoffman. 2024. “Running Markov Chain Monte Carlo on Modern Hardware and Software.” Pre-published November 6. https://doi.org/10.48550/arXiv.2411.04260.\n\n\nTjusila, Gennesaret Kharistio, Alexander Hoen, Nils-Christian Kempke, et al. 2026. “CHAP: A Hybrid GPU-CPU Heuristic for MIP.” Version 1. Pre-published. https://doi.org/10.48550/ARXIV.2605.05086."
+    "text": "References\n\n\nApplegate, David, Mateo Diaz Diaz, Oliver Hinder, et al. 2021. “Practical Large-Scale Linear Programming Using Primal-Dual Hybrid Gradient.” Paper presented Thirty-Fifth Conference on Neural Information Processing Systems. May 21. https://openreview.net/forum?id=_eXwwWOyqT_.\n\n\nBesard, Tim, Christophe Foket, and Bjorn De Sutter. 2019. “Effective Extensible Programming: Unleashing Julia on GPUs.” IEEE Transactions on Parallel and Distributed Systems 30 (4): 827–41. https://doi.org/10.1109/TPDS.2018.2872064.\n\n\nBlin, Nicolas, Stefano Gualandi, Christopher Maes, Andrea Lodi, and Bartolomeo Stellato. 2026. “Batched First-Order Methods for Parallel LP Solving in MIP.” Version 1. Pre-published. https://doi.org/10.48550/ARXIV.2601.21990.\n\n\nÇördük, Akif, Piotr Sielski, Alice Boucher, and Kumar Aatish. 2025. “GPU-Accelerated Primal Heuristics for Mixed Integer Programming.” Pre-published October 23. https://doi.org/10.48550/arXiv.2510.20499.\n\n\nHijma, Pieter, Stijn Heldens, Alessio Sclocco, Ben van Werkhoven, and Henri E. Bal. 2023. “Optimization Techniques for GPU Programming.” ACM Comput. Surv. 55 (11): 239:1–81. https://doi.org/10.1145/3570638.\n\n\nHwu, Wen-mei W., David B. Kirk, and Izzat El Hajj. 2022. Programming Massively Parallel Processors: A Hands-on Approach. Morgan Kaufmann. https://books.google.com?id=7H9dEAAAQBAJ.\n\n\nKepner, Jeremy, Peter Aaltonen, David Bader, et al. 2016. “Mathematical Foundations of the GraphBLAS.” 2016 IEEE High Performance Extreme Computing Conference (HPEC), September, 1–9. https://doi.org/10.1109/HPEC.2016.7761646.\n\n\nLu, Haihao, Zedong Peng, and Jinwen Yang. 2024. “MPAX: Mathematical Programming in JAX.” Pre-published December 12. https://doi.org/10.48550/arXiv.2412.09734.\n\n\nLu, Haihao, and Jinwen Yang. 2025a. “An Overview of GPU-based First-Order Methods for Linear Programming and Extensions.” Pre-published June 2. https://doi.org/10.48550/arXiv.2506.02174.\n\n\nLu, Haihao, and Jinwen Yang. 2025b. “cuPDLP.jl: A GPU Implementation of Restarted Primal-Dual Hybrid Gradient for Linear Programming in Julia.” Operations Research 73 (6): 3440–52. https://doi.org/10.1287/opre.2024.1069.\n\n\nMerckx, Jules. 2025. “Building Bridges: Julia as an MLIR Frontend.” Pre-published February 14. https://doi.org/10.48550/arXiv.2503.04771.\n\n\nNicusan, Andrei-Leonard, Dominik Werner, Simon Branford, Simon Hartley, Andrew J. Morris, and Kit Windows-Yule. 2025. “AcceleratedKernels.jl: Cross-Architecture Parallel Algorithms from a Unified, Transpiled Codebase.” Pre-published July 22. https://doi.org/10.48550/arXiv.2507.16710.\n\n\nPerumalla, Kalyan, and Maksudul Alam. 2021. “Design Considerations for GPU-based Mixed Integer Programming on Parallel Computing Platforms.” (New York, NY, USA), ICPP Workshops ’21, September 23, 1–7. https://doi.org/10.1145/3458744.3473366.\n\n\nShin, Sungho, François Pacaud, and Mihai Anitescu. 2024. “Accelerating Optimal Power Flow with GPUs: SIMD Abstraction of Nonlinear Programs and Condensed-Space Interior-Point Methods.” Pre-published February 26. http://arxiv.org/abs/2307.16830.\n\n\nSountsov, Pavel, Colin Carroll, and Matthew D. Hoffman. 2024. “Running Markov Chain Monte Carlo on Modern Hardware and Software.” Pre-published November 6. https://doi.org/10.48550/arXiv.2411.04260.\n\n\nTjusila, Gennesaret Kharistio, Alexander Hoen, Nils-Christian Kempke, et al. 2026. “CHAP: A Hybrid GPU-CPU Heuristic for MIP.” Version 1. Pre-published. https://doi.org/10.48550/ARXIV.2605.05086."
   },
   {
     "objectID": "gpu.html#footnotes",

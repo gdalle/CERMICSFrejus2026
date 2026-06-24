@@ -135,11 +135,31 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#why-gpus" id="toc-why-gpus" class="nav-link" data-scroll-target="#why-gpus">Why GPUs?</a></li>
+  <li><a href="#cpu-versus-gpu" id="toc-cpu-versus-gpu" class="nav-link" data-scroll-target="#cpu-versus-gpu">CPU versus GPU</a></li>
+  <li><a href="#gpu-structure" id="toc-gpu-structure" class="nav-link" data-scroll-target="#gpu-structure">GPU structure</a></li>
+  <li><a href="#memory-hierarchy" id="toc-memory-hierarchy" class="nav-link" data-scroll-target="#memory-hierarchy">Memory hierarchy</a></li>
+  </ul></li>
   <li><a href="#writing-gpu-kernels" id="toc-writing-gpu-kernels" class="nav-link" data-scroll-target="#writing-gpu-kernels">Writing GPU kernels</a></li>
-  <li><a href="#sparse-matrices-and-graphs" id="toc-sparse-matrices-and-graphs" class="nav-link" data-scroll-target="#sparse-matrices-and-graphs">Sparse matrices and graphs</a></li>
-  <li><a href="#linear-and-integer-programming" id="toc-linear-and-integer-programming" class="nav-link" data-scroll-target="#linear-and-integer-programming">Linear and integer programming</a></li>
-  <li><a href="#local-search" id="toc-local-search" class="nav-link" data-scroll-target="#local-search">Local search</a></li>
+  <li><a href="#sparse-matrices-and-graphs" id="toc-sparse-matrices-and-graphs" class="nav-link" data-scroll-target="#sparse-matrices-and-graphs">Sparse matrices and graphs</a>
+  <ul class="collapse">
+  <li><a href="#sparse-matrix-formats" id="toc-sparse-matrix-formats" class="nav-link" data-scroll-target="#sparse-matrix-formats">Sparse matrix formats</a></li>
+  <li><a href="#spmv-kernels" id="toc-spmv-kernels" class="nav-link" data-scroll-target="#spmv-kernels">SpMV kernels</a></li>
+  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
+  <li><a href="#graph-algorithms-with-linear-algebra" id="toc-graph-algorithms-with-linear-algebra" class="nav-link" data-scroll-target="#graph-algorithms-with-linear-algebra">Graph algorithms with linear algebra</a></li>
+  </ul></li>
+  <li><a href="#linear-and-integer-programming" id="toc-linear-and-integer-programming" class="nav-link" data-scroll-target="#linear-and-integer-programming">Linear and integer programming</a>
+  <ul class="collapse">
+  <li><a href="#algorithms-for-lp" id="toc-algorithms-for-lp" class="nav-link" data-scroll-target="#algorithms-for-lp">Algorithms for LP</a></li>
+  <li><a href="#whats-wrong-with-linear-solves" id="toc-whats-wrong-with-linear-solves" class="nav-link" data-scroll-target="#whats-wrong-with-linear-solves">What’s wrong with linear solves</a></li>
+  <li><a href="#pdlp" id="toc-pdlp" class="nav-link" data-scroll-target="#pdlp">PDLP</a></li>
+  <li><a href="#what-makes-it-go-brrrr" id="toc-what-makes-it-go-brrrr" class="nav-link" data-scroll-target="#what-makes-it-go-brrrr">What makes it go brrrr</a></li>
+  <li><a href="#areas-of-improvement" id="toc-areas-of-improvement" class="nav-link" data-scroll-target="#areas-of-improvement">Areas of improvement</a></li>
+  <li><a href="#algorithms-for-milp" id="toc-algorithms-for-milp" class="nav-link" data-scroll-target="#algorithms-for-milp">Algorithms for MILP</a></li>
+  <li><a href="#gpu-friendly-milp-heuristics" id="toc-gpu-friendly-milp-heuristics" class="nav-link" data-scroll-target="#gpu-friendly-milp-heuristics">GPU-friendly MILP heuristics</a></li>
+  </ul></li>
   <li><a href="#where-to-run-code" id="toc-where-to-run-code" class="nav-link" data-scroll-target="#where-to-run-code">Where to run code?</a></li>
   <li><a href="#julia-tooling" id="toc-julia-tooling" class="nav-link" data-scroll-target="#julia-tooling">Julia tooling</a>
   <ul class="collapse">
@@ -185,18 +205,128 @@ div.csl-indent {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="why-gpus" class="level3">
+<h3 class="anchored" data-anchor-id="why-gpus">Why GPUs?</h3>
+<ul>
+<li>Initially designed for computer graphics</li>
+<li>2012: proof that they can be used in deep learning</li>
+<li>Most supercomputing capabilities are GPU-driven</li>
+</ul>
+</section>
+<section id="cpu-versus-gpu" class="level3">
+<h3 class="anchored" data-anchor-id="cpu-versus-gpu">CPU versus GPU</h3>
+<ul>
+<li>CPU: few cores, complex operations, low latency, large memory</li>
+<li>GPU: many cores, simple operations, high throughput, small memory</li>
+<li>CPU is the <em>host</em>, GPU is the <em>device</em></li>
+</ul>
+</section>
+<section id="gpu-structure" class="level3">
+<h3 class="anchored" data-anchor-id="gpu-structure">GPU structure</h3>
+</section>
+<section id="memory-hierarchy" class="level3">
+<h3 class="anchored" data-anchor-id="memory-hierarchy">Memory hierarchy</h3>
+</section>
 </section>
 <section id="writing-gpu-kernels" class="level2">
 <h2 class="anchored" data-anchor-id="writing-gpu-kernels">Writing GPU kernels</h2>
 </section>
 <section id="sparse-matrices-and-graphs" class="level2">
 <h2 class="anchored" data-anchor-id="sparse-matrices-and-graphs">Sparse matrices and graphs</h2>
+<section id="sparse-matrix-formats" class="level3">
+<h3 class="anchored" data-anchor-id="sparse-matrix-formats">Sparse matrix formats</h3>
+<ul>
+<li>COO</li>
+<li>CSC</li>
+<li>CSR</li>
+<li>SELL</li>
+<li>Hybrid</li>
+</ul>
+</section>
+<section id="spmv-kernels" class="level3">
+<h3 class="anchored" data-anchor-id="spmv-kernels">SpMV kernels</h3>
+</section>
+<section id="challenges" class="level3">
+<h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
+<ul>
+<li>Load balancing</li>
+<li>Atomic operations</li>
+</ul>
+</section>
+<section id="graph-algorithms-with-linear-algebra" class="level3">
+<h3 class="anchored" data-anchor-id="graph-algorithms-with-linear-algebra">Graph algorithms with linear algebra</h3>
+<ul>
+<li>GraphBLAS specification</li>
+<li>Custom semirings</li>
+<li>Example: BFS</li>
+</ul>
+</section>
 </section>
 <section id="linear-and-integer-programming" class="level2">
 <h2 class="anchored" data-anchor-id="linear-and-integer-programming">Linear and integer programming</h2>
+<section id="algorithms-for-lp" class="level3">
+<h3 class="anchored" data-anchor-id="algorithms-for-lp">Algorithms for LP</h3>
+<ul>
+<li>Simplex: variable-wise updates, linear solve</li>
+<li>Interior point: linear solve</li>
+<li>Primal-dual methods: no linear solve</li>
+<li>Visualization on <a href="https://lpviz.net/" class="uri">https://lpviz.net/</a></li>
+</ul>
 </section>
-<section id="local-search" class="level2">
-<h2 class="anchored" data-anchor-id="local-search">Local search</h2>
+<section id="whats-wrong-with-linear-solves" class="level3">
+<h3 class="anchored" data-anchor-id="whats-wrong-with-linear-solves">What’s wrong with linear solves</h3>
+<ul>
+<li>Memory overhead of the factorization</li>
+<li>Sparse factorization and updates</li>
+<li>Doesn’t scale well on GPU</li>
+<li>Not necessarily the bottleneck</li>
+</ul>
+</section>
+<section id="pdlp" class="level3">
+<h3 class="anchored" data-anchor-id="pdlp">PDLP</h3>
+<ul>
+<li>First-order algorithm with primal and dual variables</li>
+<li>Just matrix-vector multiplications (SpMV)</li>
+<li>Low precision, high scalability</li>
+<li>Original CPU and GPU implementations in Julia (Google, then MIT)</li>
+</ul>
+</section>
+<section id="what-makes-it-go-brrrr" class="level3">
+<h3 class="anchored" data-anchor-id="what-makes-it-go-brrrr">What makes it go brrrr</h3>
+<ul>
+<li>Preconditioning</li>
+<li>Restarting</li>
+<li>Adaptive step size</li>
+<li>Averaging / reflection</li>
+<li>Feasibility polishing</li>
+</ul>
+</section>
+<section id="areas-of-improvement" class="level3">
+<h3 class="anchored" data-anchor-id="areas-of-improvement">Areas of improvement</h3>
+<ul>
+<li>Presolve</li>
+<li>Crossover</li>
+<li>Hyperparameter tuning</li>
+</ul>
+</section>
+<section id="algorithms-for-milp" class="level3">
+<h3 class="anchored" data-anchor-id="algorithms-for-milp">Algorithms for MILP</h3>
+<ul>
+<li>Branch &amp; bound: very sequential</li>
+<li>Cutting planes: very sequential</li>
+<li>Primal heuristics: sometimes parallelizable</li>
+</ul>
+</section>
+<section id="gpu-friendly-milp-heuristics" class="level3">
+<h3 class="anchored" data-anchor-id="gpu-friendly-milp-heuristics">GPU-friendly MILP heuristics</h3>
+<ul>
+<li>PDLP as the relaxation solver</li>
+<li>Feasibility pump</li>
+<li>Fix-and-propagate</li>
+<li>Large neighborhood search</li>
+<li>Collaboration between CPU and GPU</li>
+</ul>
+</section>
 </section>
 <section id="where-to-run-code" class="level2">
 <h2 class="anchored" data-anchor-id="where-to-run-code">Where to run code?</h2>
@@ -259,9 +389,7 @@ div.csl-indent {
 </section>
 <section id="graph-algorithms" class="level3">
 <h3 class="anchored" data-anchor-id="graph-algorithms">Graph algorithms</h3>
-<ul>
-<li><a href="https://github.com/tylerjthomas9/RAPIDS.jl">RAPIDS.jl</a></li>
-</ul>
+<p>Nothing… yet</p>
 </section>
 </section>
 <section id="python-tooling" class="level2">
@@ -324,11 +452,17 @@ Besard, Tim, Christophe Foket, and Bjorn De Sutter. 2019. <span>“Effective <sp
 <div id="ref-blinBatchedFirstOrderMethods2026" class="csl-entry" role="listitem">
 Blin, Nicolas, Stefano Gualandi, Christopher Maes, Andrea Lodi, and Bartolomeo Stellato. 2026. <span>“Batched <span>First-Order Methods</span> for <span>Parallel LP Solving</span> in <span>MIP</span>.”</span> Version 1. Pre-published. <a href="https://doi.org/10.48550/ARXIV.2601.21990">https://doi.org/10.48550/ARXIV.2601.21990</a>.
 </div>
+<div id="ref-cordukGPUAcceleratedPrimalHeuristics2025" class="csl-entry" role="listitem">
+Çördük, Akif, Piotr Sielski, Alice Boucher, and Kumar Aatish. 2025. <span>“<span>GPU-Accelerated Primal Heuristics</span> for <span>Mixed Integer Programming</span>.”</span> Pre-published October 23. <a href="https://doi.org/10.48550/arXiv.2510.20499">https://doi.org/10.48550/arXiv.2510.20499</a>.
+</div>
 <div id="ref-hijmaOptimizationTechniquesGPU2023" class="csl-entry" role="listitem">
 Hijma, Pieter, Stijn Heldens, Alessio Sclocco, Ben van Werkhoven, and Henri E. Bal. 2023. <span>“Optimization <span>Techniques</span> for <span>GPU Programming</span>.”</span> <em>ACM Comput. Surv.</em> 55 (11): 239:1–81. <a href="https://doi.org/10.1145/3570638">https://doi.org/10.1145/3570638</a>.
 </div>
 <div id="ref-hwuProgrammingMassivelyParallel2022" class="csl-entry" role="listitem">
 Hwu, Wen-mei W., David B. Kirk, and Izzat El Hajj. 2022. <em>Programming <span>Massively Parallel Processors</span>: <span class="nocase">A Hands-on Approach</span></em>. Morgan Kaufmann. <a href="https://books.google.com?id=7H9dEAAAQBAJ">https://books.google.com?id=7H9dEAAAQBAJ</a>.
+</div>
+<div id="ref-kepnerMathematicalFoundationsGraphBLAS2016" class="csl-entry" role="listitem">
+Kepner, Jeremy, Peter Aaltonen, David Bader, et al. 2016. <span>“Mathematical Foundations of the <span>GraphBLAS</span>.”</span> <em>2016 <span>IEEE High Performance Extreme Computing Conference</span> (<span>HPEC</span>)</em>, September, 1–9. <a href="https://doi.org/10.1109/HPEC.2016.7761646">https://doi.org/10.1109/HPEC.2016.7761646</a>.
 </div>
 <div id="ref-luMPAXMathematicalProgramming2024" class="csl-entry" role="listitem">
 Lu, Haihao, Zedong Peng, and Jinwen Yang. 2024. <span>“<span>MPAX</span>: <span>Mathematical Programming</span> in <span>JAX</span>.”</span> Pre-published December 12. <a href="https://doi.org/10.48550/arXiv.2412.09734">https://doi.org/10.48550/arXiv.2412.09734</a>.
