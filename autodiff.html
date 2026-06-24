@@ -150,12 +150,14 @@ div.csl-indent {
   <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a>
   <ul class="collapse">
   <li><a href="#principles" id="toc-principles" class="nav-link" data-scroll-target="#principles">Principles</a></li>
-  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software">Software</a></li>
-  </ul></li>
-  <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">Going further</a>
-  <ul class="collapse">
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
   <li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions">Solutions</a></li>
+  </ul></li>
+  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software">Software</a>
+  <ul class="collapse">
+  <li><a href="#julia-libraries" id="toc-julia-libraries" class="nav-link" data-scroll-target="#julia-libraries">Julia libraries</a></li>
+  <li><a href="#python-libraries" id="toc-python-libraries" class="nav-link" data-scroll-target="#python-libraries">Python libraries</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -250,20 +252,16 @@ div.csl-indent {
 <li>Source transformation</li>
 </ul>
 </section>
-<section id="software" class="level3">
-<h3 class="anchored" data-anchor-id="software">Software</h3>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
 <ul>
-<li>Available libraries</li>
-<li>Limitations</li>
+<li>Mutation support</li>
+<li>Control flow</li>
 </ul>
 </section>
-</section>
-<section id="going-further" class="level2">
-<h2 class="anchored" data-anchor-id="going-further">Going further</h2>
 <section id="challenges" class="level3">
 <h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
 <ul>
-<li>Branches, loops</li>
 <li>Non-smooth functions</li>
 <li>Approximations</li>
 <li>Solvers as layers</li>
@@ -275,6 +273,40 @@ div.csl-indent {
 <li>Writing rules</li>
 <li>Implicit function theorem for continuous optimization layers</li>
 <li>Smoothing for discrete optimization layers</li>
+</ul>
+</section>
+</section>
+<section id="software" class="level2">
+<h2 class="anchored" data-anchor-id="software">Software</h2>
+<section id="julia-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="julia-libraries">Julia libraries</h3>
+<p>General autodiff: see <a href="https://juliadiff.org/" class="uri">https://juliadiff.org/</a></p>
+<ul>
+<li><a href="https://github.com/EnzymeAD/Enzyme.jl">Enzyme.jl</a></li>
+<li><a href="https://github.com/JuliaDiff/ForwardDiff.jl">ForwardDiff.jl</a></li>
+<li><a href="https://github.com/chalk-lab/Mooncake.jl">Mooncake.jl</a></li>
+<li><a href="https://github.com/FluxML/Zygote.jl">Zygote.jl</a></li>
+</ul>
+<p>Optimization layers:</p>
+<ul>
+<li><a href="https://github.com/gdalle/ImplicitDifferentiation.jl">ImplicitDifferentiation.jl</a></li>
+<li><a href="https://github.com/jump-dev/DiffOpt.jl">DiffOpt.jl</a></li>
+<li><a href="https://github.com/JuliaDecisionFocusedLearning/InferOpt.jl">InferOpt.jl</a></li>
+</ul>
+</section>
+<section id="python-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="python-libraries">Python libraries</h3>
+<p>General autodiff:</p>
+<ul>
+<li><a href="https://github.com/jax-ml/jax">JAX</a></li>
+<li><a href="https://github.com/pytorch/pytorch">PyTorch</a></li>
+</ul>
+<p>Optimization layers:</p>
+<ul>
+<li><a href="https://github.com/google-deepmind/optax">Optax</a></li>
+<li><a href="https://github.com/metaopt/torchopt">torchopt</a></li>
+<li><a href="https://github.com/cvxpy/cvxpylayers">cvxpylayers</a></li>
+<li><a href="https://github.com/khalil-research/PyEPO">PyEPO</a></li>
 </ul>
 </section>
 </section>

@@ -32,14 +32,14 @@
     "href": "autodiff.html#implementation",
     "title": "Autodiff",
     "section": "Implementation",
-    "text": "Implementation\n\nPrinciples\n\nNon-standard interpretation\nOperator overloading\nSource transformation\n\n\n\nSoftware\n\nAvailable libraries\nLimitations"
+    "text": "Implementation\n\nPrinciples\n\nNon-standard interpretation\nOperator overloading\nSource transformation\n\n\n\nLimitations\n\nMutation support\nControl flow\n\n\n\nChallenges\n\nNon-smooth functions\nApproximations\nSolvers as layers\n\n\n\nSolutions\n\nWriting rules\nImplicit function theorem for continuous optimization layers\nSmoothing for discrete optimization layers"
   },
   {
-    "objectID": "autodiff.html#going-further",
-    "href": "autodiff.html#going-further",
+    "objectID": "autodiff.html#software",
+    "href": "autodiff.html#software",
     "title": "Autodiff",
-    "section": "Going further",
-    "text": "Going further\n\nChallenges\n\nBranches, loops\nNon-smooth functions\nApproximations\nSolvers as layers\n\n\n\nSolutions\n\nWriting rules\nImplicit function theorem for continuous optimization layers\nSmoothing for discrete optimization layers"
+    "section": "Software",
+    "text": "Software\n\nJulia libraries\nGeneral autodiff: see https://juliadiff.org/\n\nEnzyme.jl\nForwardDiff.jl\nMooncake.jl\nZygote.jl\n\nOptimization layers:\n\nImplicitDifferentiation.jl\nDiffOpt.jl\nInferOpt.jl\n\n\n\nPython libraries\nGeneral autodiff:\n\nJAX\nPyTorch\n\nOptimization layers:\n\nOptax\ntorchopt\ncvxpylayers\nPyEPO"
   },
   {
     "objectID": "autodiff.html#references",
