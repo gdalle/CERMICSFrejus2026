@@ -88,7 +88,7 @@
     "href": "gpu.html#julia-tooling",
     "title": "GPU",
     "section": "Julia tooling",
-    "text": "Julia tooling\n\nCUDA-specific code\n\nCUDA.jl\nMath libraries: cuBLAS.jl, cuSPARSE.jl, etc.\ncuTile.jl\n\n\n\nHardware-agnostic code\n\nGPUArrays.jl\nKernelAbstractions.jl\nAcceleratedKernels.jl\nReactant.jl\n\n\n\nDeep learning\n\nEnzyme.jl\nLux.jl\n\n\n\nMathematical programming\nModeling:\n\nJuMP.jl1\nConvex.jl\nExaModels.jl\nBatchNLPKernels.jl\nExperimental: BatchOptInterface.jl, [BatchQuadraticModels.jl]\n\nSolvers:\n\nClarabel.jl\nCoolPDLP.jl\ncuOpt.jl\ncuPDLPx.jl\nMadIPM.jl\nMadNLP.jl\nSCS.jl\n\n\n\nGraph algorithms\n\nRAPIDS.jl"
+    "text": "Julia tooling\n\nCUDA-specific code\n\nCUDA.jl\nMath libraries: cuBLAS.jl, cuSPARSE.jl, etc.\ncuTile.jl\n\n\n\nHardware-agnostic code\n\nGPUArrays.jl\nKernelAbstractions.jl\nAcceleratedKernels.jl\nReactant.jl\n\n\n\nDeep learning\n\nEnzyme.jl\nLux.jl\n\n\n\nMathematical programming\nModeling (including batched):\n\nJuMP.jl1\nConvex.jl\nExaModels.jl\nBatchNLPKernels.jl\nExperimental: BatchOptInterface.jl, BatchQuadraticModels.jl\n\nSolvers:\n\nClarabel.jl\nCoolPDLP.jl\ncuOpt.jl\ncuPDLPx.jl\nMadIPM.jl\nMadNLP.jl\nSCS.jl\n\n\n\nGraph algorithms\n\nRAPIDS.jl"
   },
   {
     "objectID": "gpu.html#python-tooling",
