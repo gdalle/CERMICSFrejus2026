@@ -48,6 +48,8 @@ Modeling:
 - [JuMP.jl](https://github.com/jump-dev/JuMP.jl)[^1]
 - [Convex.jl](https://github.com/jump-dev/Convex.jl)
 - [ExaModels.jl](https://github.com/exanauts/ExaModels.jl)
+- [BatchNLPKernels.jl](https://github.com/LearningToOptimize/BatchNLPKernels.jl)
+- Experimental: [BatchOptInterface.jl](https://github.com/klamike/BatchOptInterface.jl), [BatchQuadraticModels.jl]
 
 [^1]: see the [batching issue](https://github.com/jump-dev/MathOptInterface.jl/issues/2904)
 
