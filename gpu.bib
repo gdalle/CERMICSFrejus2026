@@ -35,23 +35,6 @@
   version = {1}
 }
 
-@article{dellingPHASTHardwareacceleratedShortest2013,
-  title = {{{PHAST}}: {{Hardware-accelerated}} Shortest Path Trees},
-  shorttitle = {{{PHAST}}},
-  author = {Delling, Daniel and Goldberg, Andrew V. and Nowatzyk, Andreas and Werneck, Renato F.},
-  date = {2013-07-01},
-  journaltitle = {Journal of Parallel and Distributed Computing},
-  shortjournal = {Journal of Parallel and Distributed Computing},
-  series = {Best {{Papers}}: {{International Parallel}} and {{Distributed Processing Symposium}} ({{IPDPS}}) 2010, 2011 and 2012},
-  volume = {73},
-  number = {7},
-  pages = {940--952},
-  issn = {0743-7315},
-  doi = {10.1016/j.jpdc.2012.02.007},
-  url = {https://www.sciencedirect.com/science/article/pii/S074373151200041X},
-  abstract = {We present a novel algorithm to solve the non-negative single-source shortest path problem on road networks and graphs with low highway dimension. After a quick preprocessing phase, we can compute all distances from a given source in the graph with essentially a linear sweep over all vertices. Because this sweep is independent of the source, we are able to reorder vertices in advance to exploit locality. Moreover, our algorithm takes advantage of features of modern CPU architectures, such as SSE and multiple cores. Compared to Dijkstra’s algorithm, our method needs fewer operations, has better locality, and is better able to exploit parallelism at multi-core and instruction levels. We gain additional speedup when implementing our algorithm on a GPU, where it is up to three orders of magnitude faster than Dijkstra’s algorithm on a high-end CPU. This makes applications based on all-pairs shortest-paths practical for continental-sized road networks. Several algorithms, such as computing the graph diameter, arc flags, or exact reaches, can be greatly accelerated by our method.}
-}
-
 @article{hijmaOptimizationTechniquesGPU2023,
   title = {Optimization {{Techniques}} for {{GPU Programming}}},
   author = {Hijma, Pieter and Heldens, Stijn and Sclocco, Alessio and family=Werkhoven, given=Ben, prefix=van, useprefix=true and Bal, Henri E.},
@@ -200,18 +183,6 @@
   doi = {10.48550/ARXIV.2605.05086},
   url = {https://arxiv.org/abs/2605.05086},
   abstract = {We present CHAP (Coordinating Heuristics Across Platforms) a GPU-CPU-hybrid primal heuristic framework for mixed-integer programming. CHAP adopts a portfolio approach where it coordinates a set of primal heuristics, including Local Search, Fix-and-Propagate, and Feasibility Pump, via a shared solution pool. The solution pool is used to exchange feasible incumbent solutions, LP solutions, along with promising infeasible solution candidates, enabling a more comprehensive exploration of the solution space. On the GPU side, we implement a native tabu search featuring a novel best-shift algorithm built on sort, scan, and reduce primitives, along with specialized kernel designs. We additionally leverage cuPDLPx as an approximate LP solver. On the CPU side, we employ various Fix-and-Propagate strategies, guided by information from the solution pool, complemented by a CPU-based tabu search and a Feasibility Pump. All components operate collaboratively, iteratively repairing and improving candidate solutions maintained in the pool. We evaluate our framework on the 50-instances benchmark from the 2026 Land-Doig MIP Competition under competition constraints, including a five-minute time limit. In these settings, CHAP finds solutions to 47 instances outperforming both Gurobi (44) in default mode and NVIDIA cuOpt (43) in heuristics-only mode. The results demonstrate that coordinated cross-platform portfolios offer a promising direction for the integration of GPU heuristics into modern high-performance MIP solvers. The code will be made available on GitHub.},
-  pubstate = {prepublished},
-  version = {1}
-}
-
-@online{zhaoGPUbasedSplitAlgorithm2025,
-  title = {{{GPU-based Split}} Algorithm for {{Large-Scale CVRPSD}}},
-  author = {Zhao, Jingyi and Yang, Linxin and Zhang, Haohua and Ding, Tian},
-  date = {2025},
-  doi = {10.48550/ARXIV.2511.18022},
-  url = {https://arxiv.org/abs/2511.18022},
-  abstract = {Dynamic programming (DP) is a cornerstone of combinatorial optimization, yet its inherently sequential structure has long limited its scalability in scenario-based stochastic programming (SP). This paper introduces a GPU-accelerated framework that reformulates a broad class of forward DP recursions as batched min–plus matrix–vector products over layered DAGs, collapsing actions into masked stateto-state transitions that map seamlessly to GPU kernels. Using this reformulation, our approach takes advantage of massive parallelism across both scenarios and transitions, enabling the simultaneous evaluation of over one million uncertainty realizations in a single GPU pass – a scale far beyond the reach of existing methods. We instantiate the framework in two canonical applications: the capacitated vehicle routing problem with stochastic demand and a dynamic stochastic inventory routing problem. In both cases, DP subroutines traditionally considered sequential are redesigned to harness two- or three-dimensional GPU parallelism. Experiments demonstrate near-linear scaling in the number of scenarios and yield one to three orders of magnitude speedups over multithreaded CPU baselines, resulting in tighter SAA estimates and significantly stronger first-stage decisions under fixed time budgets. Beyond these applications, our work establishes a general-purpose recipe for transforming classical DP routines into high-throughput GPU primitives, substantially expanding the computational frontier of stochastic discrete optimization to the million-scenario scale.},
-  langid = {english},
   pubstate = {prepublished},
   version = {1}
 }

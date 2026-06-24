@@ -46,20 +46,24 @@ bibliography: gpu.bib
 Modeling:
 
 - [JuMP.jl](https://github.com/jump-dev/JuMP.jl)[^1]
+- [Convex.jl](https://github.com/jump-dev/Convex.jl)
 - [ExaModels.jl](https://github.com/exanauts/ExaModels.jl)
 
 [^1]: see the [batching issue](https://github.com/jump-dev/MathOptInterface.jl/issues/2904)
 
 Solvers:
 
+- [Clarabel.jl](https://github.com/oxfordcontrol/Clarabel.jl/tree/CuClarabel)
 - [CoolPDLP.jl](https://github.com/JuliaDecisionFocusedLearning/CoolPDLP.jl)
 - [cuOpt.jl](https://github.com/jump-dev/cuOpt.jl)
 - [cuPDLPx.jl](https://github.com/MIT-Lu-Lab/CuPDLPx.jl)
+- [MadIPM.jl](https://github.com/MadNLP/MadIPM.jl)
 - [MadNLP.jl](https://github.com/MadNLP/MadNLP.jl)
+- [SCS.jl](https://github.com/jump-dev/SCS.jl)
 
 ### Graph algorithms
 
-Not much... yet.
+- [RAPIDS.jl](https://github.com/tylerjthomas9/RAPIDS.jl)
 
 ## Python tooling
 
