@@ -35,6 +35,19 @@
   version = {1}
 }
 
+@online{cordukGPUAcceleratedPrimalHeuristics2025,
+  title = {{{GPU-Accelerated Primal Heuristics}} for {{Mixed Integer Programming}}},
+  author = {Çördük, Akif and Sielski, Piotr and Boucher, Alice and Aatish, Kumar},
+  date = {2025-10-23},
+  eprint = {2510.20499},
+  eprinttype = {arXiv},
+  eprintclass = {math},
+  doi = {10.48550/arXiv.2510.20499},
+  url = {http://arxiv.org/abs/2510.20499},
+  abstract = {We introduce a fusion of GPU accelerated primal heuristics for Mixed Integer Programming. Leveraging GPU acceleration enables exploration of larger search regions and faster iterations. A GPU-accelerated PDLP serves as an approximate LP solver, while a new probing cache facilitates rapid roundings and early infeasibility detection. Several state-of-the-art heuristics, including Feasibility Pump, Feasibility Jump, and Fix-and-Propagate, are further accelerated and enhanced. The combined approach of these GPU-driven algorithms yields significant improvements over existing methods, both in the number of feasible solutions and the quality of objectives by achieving 221 feasible solutions and 22\% objective gap in the MIPLIB2017 benchmark on a presolved dataset.},
+  pubstate = {prepublished}
+}
+
 @article{hijmaOptimizationTechniquesGPU2023,
   title = {Optimization {{Techniques}} for {{GPU Programming}}},
   author = {Hijma, Pieter and Heldens, Stijn and Sclocco, Alessio and family=Werkhoven, given=Ben, prefix=van, useprefix=true and Bal, Henri E.},
@@ -61,6 +74,18 @@
   isbn = {978-0-323-98463-8},
   langid = {english},
   pagetotal = {581}
+}
+
+@inproceedings{kepnerMathematicalFoundationsGraphBLAS2016,
+  title = {Mathematical Foundations of the {{GraphBLAS}}},
+  booktitle = {2016 {{IEEE High Performance Extreme Computing Conference}} ({{HPEC}})},
+  author = {Kepner, Jeremy and Aaltonen, Peter and Bader, David and Buluç, Aydin and Franchetti, Franz and Gilbert, John and Hutchison, Dylan and Kumar, Manoj and Lumsdaine, Andrew and Meyerhenke, Henning and McMillan, Scott and Yang, Carl and Owens, John D. and Zalewski, Marcin and Mattson, Timothy and Moreira, Jose},
+  date = {2016-09},
+  pages = {1--9},
+  doi = {10.1109/HPEC.2016.7761646},
+  url = {https://ieeexplore.ieee.org/abstract/document/7761646},
+  abstract = {The GraphBLAS standard (GraphBlas.org) is being developed to bring the potential of matrix-based graph algorithms to the broadest possible audience. Mathematically, the GraphBLAS defines a core set of matrix-based graph operations that can be used to implement a wide class of graph algorithms in a wide range of programming environments. This paper provides an introduction to the mathematics of the GraphBLAS. Graphs represent connections between vertices with edges. Matrices can represent a wide range of graphs using adjacency matrices or incidence matrices. Adjacency matrices are often easier to analyze while incidence matrices are often better for representing data. Fortunately, the two are easily connected by matrix multiplication. A key feature of matrix mathematics is that a very small number of matrix operations can be used to manipulate a very wide range of graphs. This composability of a small number of operations is the foundation of the GraphBLAS. A standard such as the GraphBLAS can only be effective if it has low performance overhead. Performance measurements of prototype GraphBLAS implementations indicate that the overhead is low.},
+  eventtitle = {2016 {{IEEE High Performance Extreme Computing Conference}} ({{HPEC}})}
 }
 
 @article{luCuPDLPjlGPUImplementation2025,

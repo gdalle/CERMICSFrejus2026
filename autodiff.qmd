@@ -101,6 +101,12 @@ Optimization layers:
 - [torchopt](https://github.com/metaopt/torchopt)
 - [cvxpylayers](https://github.com/cvxpy/cvxpylayers)
 - [PyEPO](https://github.com/khalil-research/PyEPO)
+- [SoftJAX](https://github.com/a-paulus/softjax) / [SoftTorch](https://github.com/a-paulus/softtorch)
+
+## Conclusion
+
+- Don't compute gradients by hand
+- Define a rule for any non-differentiable operation
 
 ## References
 

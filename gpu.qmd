@@ -5,13 +5,97 @@ bibliography: gpu.bib
 
 ## Introduction
 
+### Why GPUs?
+
+- Initially designed for computer graphics
+- 2012: proof that they can be used in deep learning
+- Most supercomputing capabilities are GPU-driven
+
+### CPU versus GPU
+
+- CPU: few cores, complex operations, low latency, large memory
+- GPU: many cores, simple operations, high throughput, small memory
+- CPU is the _host_, GPU is the _device_
+
+### GPU structure
+
+### Memory hierarchy
+
 ## Writing GPU kernels
 
 ## Sparse matrices and graphs
 
+### Sparse matrix formats
+
+- COO
+- CSC
+- CSR
+- SELL
+- Hybrid
+
+### SpMV kernels
+
+### Challenges
+
+- Load balancing
+- Atomic operations
+
+### Graph algorithms with linear algebra
+
+- GraphBLAS specification
+- Custom semirings
+- Example: BFS
+
 ## Linear and integer programming
 
-## Local search
+### Algorithms for LP
+
+- Simplex: variable-wise updates, linear solve
+- Interior point: linear solve
+- Primal-dual methods: no linear solve
+- Visualization on <https://lpviz.net/>
+
+### What's wrong with linear solves
+
+- Memory overhead of the factorization
+- Sparse factorization and updates
+- Doesn't scale well on GPU
+- Not necessarily the bottleneck
+
+### PDLP
+
+- First-order algorithm with primal and dual variables
+- Just matrix-vector multiplications (SpMV)
+- Low precision, high scalability
+- Original CPU and GPU implementations in Julia (Google, then MIT)
+
+### What makes it go brrrr
+
+- Preconditioning
+- Restarting
+- Adaptive step size
+- Averaging / reflection
+- Feasibility polishing
+
+### Areas of improvement
+
+- Presolve
+- Crossover
+- Hyperparameter tuning
+
+### Algorithms for MILP
+
+- Branch & bound: very sequential
+- Cutting planes: very sequential
+- Primal heuristics: sometimes parallelizable
+
+### GPU-friendly MILP heuristics
+
+- PDLP as the relaxation solver
+- Feasibility pump
+- Fix-and-propagate
+- Large neighborhood search
+- Collaboration between CPU and GPU
 
 ## Where to run code?
 
@@ -65,7 +149,7 @@ Solvers:
 
 ### Graph algorithms
 
-- [RAPIDS.jl](https://github.com/tylerjthomas9/RAPIDS.jl)
+Nothing... yet
 
 ## Python tooling
 
