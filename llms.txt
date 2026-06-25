@@ -1,0 +1,7 @@
+# Home
+
+## Pages
+
+- [Computational tools for decision-focused learning](https://gdalle.github.io/CERMICSFrejus2026/index.llms.md)
+- [Autodiff](https://gdalle.github.io/CERMICSFrejus2026/autodiff.llms.md)
+- [GPU](https://gdalle.github.io/CERMICSFrejus2026/gpu.llms.md)
