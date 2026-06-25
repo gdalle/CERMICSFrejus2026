@@ -236,7 +236,7 @@ end
 
 Modeling (including batched):
 
-- [JuMP.jl](https://github.com/jump-dev/JuMP.jl)[^1]
+- [JuMP.jl](https://github.com/jump-dev/JuMP.jl)[^2]
 - [Convex.jl](https://github.com/jump-dev/Convex.jl)
 - [ExaModels.jl](https://github.com/exanauts/ExaModels.jl)
 - [BatchNLPKernels.jl](https://github.com/LearningToOptimize/BatchNLPKernels.jl)
