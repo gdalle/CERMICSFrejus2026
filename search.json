@@ -67,14 +67,14 @@
     "href": "gpu.html#how-a-gpu-works",
     "title": "GPU",
     "section": "How a GPU works",
-    "text": "How a GPU works\n\nCommunication\n\nCPU is the host, GPUs are the devices\nDevice code is composed of kernels, executed in a data-parallel manner\nKernels are interlaced with host instructions, launched asynchronously\nTransfer of data or instructions between CPU and GPU is expensive\n\n\n\nGPU structure\n\nGrid of blocks (1D, 2D or 3D), each with up to 1024 threads\nWithin a block, threads are executed in lockstep (inside warps of 32)\nSingle Instruction, Multiple Thread paradigm\nThe number of blocks actually executed in parallel is hardware-dependent\n\n\n\nMemory hierarchy\n\nHost memory + 3 kinds of on-device memory\nGlobal memory (or DRAM), common across blocks"
+    "text": "How a GPU works\n\nCommunication\n\nCPU is the host, GPUs are the devices\nDevice code is composed of kernels, executed in a data-parallel manner\nKernels are interlaced with host instructions, launched asynchronously\nTransfer of data or instructions between CPU and GPU is expensive\n\n\n\nTheoretical structure\n\nGrid of blocks (1D, 2D or 3D), each with up to 1024 threads\nWithin a block, threads are executed in lockstep\nSingle Instruction, Multiple Thread paradigm\n\n\n\nHardware structure\n\nSeveral Streaming Multiprocessors (142 on the L40s), each with many CUDA cores (128 on the L40s)\nAll threads in a block are assigned to the same SM, but one SM will get several blocks\nThreads within a block are physically in the same place and can interact with one another (synchronization, memory)\nLimited number of SMs + limited number of blocks executed at the same time by an SM = no guarantee on the simultaneity or sequence between two blocks\n\n\n\nWarps and divergence\n\nBlocks are split into warps of 32 threads which are physically executed in lockstep\nIn the presence of control flow, all paths are taken sequentially: one pass for if then one pass for else\nTypical example is boundary conditions (only affects one warp)\n\n\n\nMemory hierarchy\n\nHost memory + 3 kinds of on-device memory\nGlobal memory (or DRAM), common across blocks\n\n\n\nResource allocation\n\nHardware-dependent resource allocation enables transparent scalability\n(Too) many threads/warps per SM is good for latency tolerance\nBut each thread induces a certain occupancy (amount of memory, registers, etc)"
   },
   {
     "objectID": "gpu.html#gpu-kernels",
     "href": "gpu.html#gpu-kernels",
     "title": "GPU",
     "section": "GPU kernels",
-    "text": "GPU kernels\n\nContents of a kernel\n\nEach thread knows its block and thread ID, which replaces a loop\n\nusing KernelAbstractions\n@kernel function mul2_kernel(A)\n  I = @index(Global)\n  A[I] = 2 * A[I]\nend\n\nGrid and block shapes are specified by host at kernel launch\n\nimport CUDA\ndev = CUDABackend()\nA = ones(1024, 1024)\nev = mul2_kernel(dev, 64)(A, ndrange=size(A))\nsynchronize(dev)\nall(A .== 2.0)\n\n\nLaunching kernels\n\nKernel launch has overhead\nKernel fusion at program scale is essential"
+    "text": "GPU kernels\n\nContents of a kernel\n\nEach thread knows its block and thread ID, which replaces a loop\n\nusing KernelAbstractions\n@kernel function mul2_kernel(A)\n  I = @index(Global)\n  A[I] = 2 * A[I]\nend\n\nGrid and block shapes are specified by host at kernel launch\n\nimport CUDA\ndev = CUDABackend()\nA = ones(1024, 1024)\nev = mul2_kernel(dev, 64)(A, ndrange=size(A))\nsynchronize(dev)\nall(A .== 2.0)\n\n\nMatmul kernel\nGrid maps to output matrix, one thread per dot product:\nusing KernelAbstractions\n\n@kernel function matmul_kernel!(output, a, b)\n    i, j = @index(Global, NTuple)\n    tmp_sum = zero(eltype(output))\n    for k in axes(a, 2)\n        tmp_sum += a[i, k] * b[k, j]\n    end\n    output[i, j] = tmp_sum\nend\n\nfunction matmul!(output, a, b)\n    backend = get_backend(a)\n    kernel! = matmul_kernel!(backend)\n    kernel!(output, a, b, ndrange = size(output))\n    return\nend\n\n\nLaunching kernels\n\nKernel launch has overhead\nKernel fusion at program scale improves performance"
   },
   {
     "objectID": "gpu.html#sparse-matrices-and-graphs",
@@ -91,13 +91,6 @@
     "text": "Linear and integer programming\n\nAlgorithms for LP\n\nSimplex: variable-wise updates, linear solve\nInterior point: linear solve\nPrimal-dual methods: no linear solve\nVisualization on https://lpviz.net/\n\n\n\nWhat’s wrong with linear solves\n\nMemory overhead of the factorization\nSparse factorization and updates\nDoesn’t scale well on GPU\nNot necessarily the bottleneck\n\n\n\nPDLP\n\nFirst-order algorithm with primal and dual variables\nJust matrix-vector multiplications (SpMV)\nLow precision, high scalability\nOriginal CPU and GPU implementations in Julia (Google, then MIT)\n\n\n\nWhat makes it go brrrr\n\nPreconditioning\nRestarting\nAdaptive step size\nAveraging / reflection\nFeasibility polishing\n\n\n\nAreas of improvement\n\nPresolve\nCrossover\nHyperparameter tuning\n\n\n\nAlgorithms for MILP\n\nBranch & bound: very sequential\nCutting planes: very sequential\nPrimal heuristics: sometimes parallelizable\n\n\n\nGPU-friendly MILP heuristics\n\nPDLP as the relaxation solver\nFeasibility pump\nFix-and-propagate\nLarge neighborhood search\nCollaboration between CPU and GPU"
   },
   {
-    "objectID": "gpu.html#where-to-run-code",
-    "href": "gpu.html#where-to-run-code",
-    "title": "GPU",
-    "section": "Where to run code?",
-    "text": "Where to run code?\n\nOn your laptop\n\nif your code is hardware-agnostic\nor if you have a (compatible) GPU\n\nOn the ENPC cluster, see instructions here (private repo)\nOn a Google Colab notebook"
-  },
-  {
     "objectID": "gpu.html#julia-tooling",
     "href": "gpu.html#julia-tooling",
     "title": "GPU",
@@ -112,6 +105,13 @@
     "text": "Python tooling\n\nCUDA-specific code\n\ncupy\nnvmath-python\ncutile-python\n\n\n\nHardware-agnostic code\n\nArray API\nDLPack\nnumba\ntriton\nPallas\n\n\n\nDeep learning\n\nPyTorch\nJAX\n\n\n\nMathematical programming\nModeling:\n\ncvxpy\npyomo\n\nSolvers:\n\ncuopt\nMPAX\n\n\n\nGraph algorithms\n\nnetworkx\ncugraph"
   },
   {
+    "objectID": "gpu.html#where-to-run-code",
+    "href": "gpu.html#where-to-run-code",
+    "title": "GPU",
+    "section": "Where to run code?",
+    "text": "Where to run code?\n\nHardware options\n\nOn your laptop\n\nif your code is hardware-agnostic\nor if you have a (compatible) GPU\n\nOn the ENPC cluster, see instructions here and here (private repo)\nOn a Google Colab notebook\n\n\n\nCluster demo\nsrun \\\n--job-name=frejus \\\n--partition=gpu-cermics \\\n--gres=gpu:1 \\\n--output=%j_%x.out \\\n--error=%j_%x.err \\\njulia &lt;&lt;'EOF'\nusing Pkg\nPkg.activate(\"gpu\"; shared=true)\nPkg.add(\"CUDA\")\nusing CUDA\nCUDA.versioninfo()\nEOF"
+  },
+  {
     "objectID": "gpu.html#references",
     "href": "gpu.html#references",
     "title": "GPU",
@@ -123,6 +123,6 @@
     "href": "gpu.html#footnotes",
     "title": "GPU",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nstats given for the NVIDIA L40, similar to the one installed on ENPC’s cluster↩︎\nstats given for the NVIDIA L40, similar to the one installed on ENPC’s cluster↩︎"
+    "text": "Footnotes\n\n\nstats given for the NVIDIA L40s cards installed on ENPC’s cluster↩︎\nstats given for the NVIDIA L40s cards installed on ENPC’s cluster↩︎"
   }
 ]

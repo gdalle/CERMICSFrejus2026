@@ -179,12 +179,16 @@ div.csl-indent {
   <li><a href="#how-a-gpu-works" id="toc-how-a-gpu-works" class="nav-link" data-scroll-target="#how-a-gpu-works">How a GPU works</a>
   <ul class="collapse">
   <li><a href="#communication" id="toc-communication" class="nav-link" data-scroll-target="#communication">Communication</a></li>
-  <li><a href="#gpu-structure" id="toc-gpu-structure" class="nav-link" data-scroll-target="#gpu-structure">GPU structure</a></li>
+  <li><a href="#theoretical-structure" id="toc-theoretical-structure" class="nav-link" data-scroll-target="#theoretical-structure">Theoretical structure</a></li>
+  <li><a href="#hardware-structure" id="toc-hardware-structure" class="nav-link" data-scroll-target="#hardware-structure">Hardware structure</a></li>
+  <li><a href="#warps-and-divergence" id="toc-warps-and-divergence" class="nav-link" data-scroll-target="#warps-and-divergence">Warps and divergence</a></li>
   <li><a href="#memory-hierarchy" id="toc-memory-hierarchy" class="nav-link" data-scroll-target="#memory-hierarchy">Memory hierarchy</a></li>
+  <li><a href="#resource-allocation" id="toc-resource-allocation" class="nav-link" data-scroll-target="#resource-allocation">Resource allocation</a></li>
   </ul></li>
   <li><a href="#gpu-kernels" id="toc-gpu-kernels" class="nav-link" data-scroll-target="#gpu-kernels">GPU kernels</a>
   <ul class="collapse">
   <li><a href="#contents-of-a-kernel" id="toc-contents-of-a-kernel" class="nav-link" data-scroll-target="#contents-of-a-kernel">Contents of a kernel</a></li>
+  <li><a href="#matmul-kernel" id="toc-matmul-kernel" class="nav-link" data-scroll-target="#matmul-kernel">Matmul kernel</a></li>
   <li><a href="#launching-kernels" id="toc-launching-kernels" class="nav-link" data-scroll-target="#launching-kernels">Launching kernels</a></li>
   </ul></li>
   <li><a href="#sparse-matrices-and-graphs" id="toc-sparse-matrices-and-graphs" class="nav-link" data-scroll-target="#sparse-matrices-and-graphs">Sparse matrices and graphs</a>
@@ -203,7 +207,6 @@ div.csl-indent {
   <li><a href="#algorithms-for-milp" id="toc-algorithms-for-milp" class="nav-link" data-scroll-target="#algorithms-for-milp">Algorithms for MILP</a></li>
   <li><a href="#gpu-friendly-milp-heuristics" id="toc-gpu-friendly-milp-heuristics" class="nav-link" data-scroll-target="#gpu-friendly-milp-heuristics">GPU-friendly MILP heuristics</a></li>
   </ul></li>
-  <li><a href="#where-to-run-code" id="toc-where-to-run-code" class="nav-link" data-scroll-target="#where-to-run-code">Where to run code?</a></li>
   <li><a href="#julia-tooling" id="toc-julia-tooling" class="nav-link" data-scroll-target="#julia-tooling">Julia tooling</a>
   <ul class="collapse">
   <li><a href="#cuda-specific-code" id="toc-cuda-specific-code" class="nav-link" data-scroll-target="#cuda-specific-code">CUDA-specific code</a></li>
@@ -219,6 +222,11 @@ div.csl-indent {
   <li><a href="#deep-learning-1" id="toc-deep-learning-1" class="nav-link" data-scroll-target="#deep-learning-1">Deep learning</a></li>
   <li><a href="#mathematical-programming-1" id="toc-mathematical-programming-1" class="nav-link" data-scroll-target="#mathematical-programming-1">Mathematical programming</a></li>
   <li><a href="#graph-algorithms-1" id="toc-graph-algorithms-1" class="nav-link" data-scroll-target="#graph-algorithms-1">Graph algorithms</a></li>
+  </ul></li>
+  <li><a href="#where-to-run-code" id="toc-where-to-run-code" class="nav-link" data-scroll-target="#where-to-run-code">Where to run code?</a>
+  <ul class="collapse">
+  <li><a href="#hardware-options" id="toc-hardware-options" class="nav-link" data-scroll-target="#hardware-options">Hardware options</a></li>
+  <li><a href="#cluster-demo" id="toc-cluster-demo" class="nav-link" data-scroll-target="#cluster-demo">Cluster demo</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -288,13 +296,29 @@ div.csl-indent {
 <li>Transfer of data or instructions between CPU and GPU is expensive</li>
 </ul>
 </section>
-<section id="gpu-structure" class="level3">
-<h3 class="anchored" data-anchor-id="gpu-structure">GPU structure</h3>
+<section id="theoretical-structure" class="level3">
+<h3 class="anchored" data-anchor-id="theoretical-structure">Theoretical structure</h3>
 <ul>
 <li>Grid of blocks (1D, 2D or 3D), each with up to 1024 threads</li>
-<li>Within a block, threads are executed in lockstep (inside warps of 32)</li>
+<li>Within a block, threads are executed in lockstep</li>
 <li>Single Instruction, Multiple Thread paradigm</li>
-<li>The number of blocks actually executed in parallel is hardware-dependent</li>
+</ul>
+</section>
+<section id="hardware-structure" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-structure">Hardware structure</h3>
+<ul>
+<li>Several Streaming Multiprocessors (142 on the L40s), each with many CUDA cores (128 on the L40s)</li>
+<li>All threads in a block are assigned to the same SM, but one SM will get several blocks</li>
+<li>Threads within a block are physically in the same place and can interact with one another (synchronization, memory)</li>
+<li>Limited number of SMs + limited number of blocks executed at the same time by an SM = no guarantee on the simultaneity or sequence between two blocks</li>
+</ul>
+</section>
+<section id="warps-and-divergence" class="level3">
+<h3 class="anchored" data-anchor-id="warps-and-divergence">Warps and divergence</h3>
+<ul>
+<li>Blocks are split into warps of 32 threads which are physically executed in lockstep</li>
+<li>In the presence of control flow, all paths are taken sequentially: one pass for <code>if</code> then one pass for <code>else</code></li>
+<li>Typical example is boundary conditions (only affects one warp)</li>
 </ul>
 </section>
 <section id="memory-hierarchy" class="level3">
@@ -302,6 +326,14 @@ div.csl-indent {
 <ul>
 <li>Host memory + 3 kinds of on-device memory</li>
 <li>Global memory (or DRAM), common across blocks</li>
+</ul>
+</section>
+<section id="resource-allocation" class="level3">
+<h3 class="anchored" data-anchor-id="resource-allocation">Resource allocation</h3>
+<ul>
+<li>Hardware-dependent resource allocation enables transparent scalability</li>
+<li>(Too) many threads/warps per SM is good for latency tolerance</li>
+<li>But each thread induces a certain occupancy (amount of memory, registers, etc)</li>
 </ul>
 </section>
 </section>
@@ -327,11 +359,32 @@ div.csl-indent {
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">synchronize</span>(dev)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(A <span class="op">.==</span> <span class="fl">2.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="matmul-kernel" class="level3">
+<h3 class="anchored" data-anchor-id="matmul-kernel">Matmul kernel</h3>
+<p>Grid maps to output matrix, one thread per dot product:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">KernelAbstractions</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@kernel</span> <span class="kw">function</span> <span class="fu">matmul_kernel!</span>(output, a, b)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    i, j <span class="op">=</span> <span class="pp">@index</span>(Global, <span class="dt">NTuple</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    tmp_sum <span class="op">=</span> <span class="fu">zero</span>(<span class="fu">eltype</span>(output))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="fu">axes</span>(a, <span class="fl">2</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        tmp_sum <span class="op">+=</span> a[i, k] <span class="op">*</span> b[k, j]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    output[i, j] <span class="op">=</span> tmp_sum</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">matmul!</span>(output, a, b)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    backend <span class="op">=</span> <span class="fu">get_backend</span>(a)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    kernel! <span class="op">=</span> <span class="fu">matmul_kernel!</span>(backend)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kernel!</span>(output, a, b, ndrange <span class="op">=</span> <span class="fu">size</span>(output))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 <section id="launching-kernels" class="level3">
 <h3 class="anchored" data-anchor-id="launching-kernels">Launching kernels</h3>
 <ul>
 <li>Kernel launch has overhead</li>
-<li>Kernel fusion at program scale is essential</li>
+<li>Kernel fusion at program scale improves performance</li>
 </ul>
 </section>
 </section>
@@ -428,18 +481,6 @@ div.csl-indent {
 <li>Collaboration between CPU and GPU</li>
 </ul>
 </section>
-</section>
-<section id="where-to-run-code" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-run-code">Where to run code?</h2>
-<ul>
-<li>On your laptop
-<ul>
-<li>if your code is hardware-agnostic</li>
-<li>or if you have a (compatible) GPU</li>
-</ul></li>
-<li>On the ENPC cluster, see instructions <a href="https://github.com/cermics/cluster/blob/main/shared_cluster.md">here</a> (private repo)</li>
-<li>On a <a href="https://colab.research.google.com/">Google Colab</a> notebook</li>
-</ul>
 </section>
 <section id="julia-tooling" class="level2">
 <h2 class="anchored" data-anchor-id="julia-tooling">Julia tooling</h2>
@@ -541,6 +582,37 @@ div.csl-indent {
 </ul>
 </section>
 </section>
+<section id="where-to-run-code" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-run-code">Where to run code?</h2>
+<section id="hardware-options" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-options">Hardware options</h3>
+<ul>
+<li>On your laptop
+<ul>
+<li>if your code is hardware-agnostic</li>
+<li>or if you have a (compatible) GPU</li>
+</ul></li>
+<li>On the ENPC cluster, see instructions <a href="https://github.com/cermics/cluster/blob/main/shared_cluster.md">here</a> and <a href="https://github.com/cermics/cluster/blob/main/shared_cluster.pdf">here</a> (private repo)</li>
+<li>On a <a href="https://colab.research.google.com/">Google Colab</a> notebook</li>
+</ul>
+</section>
+<section id="cluster-demo" class="level3">
+<h3 class="anchored" data-anchor-id="cluster-demo">Cluster demo</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>--job-name=frejus <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>--partition=gpu-cermics <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>--gres=gpu:1 <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>--output=%j_%x.out <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>--error=%j_%x.err <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&lt;&lt;'EOF'</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">using Pkg</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">Pkg.activate("gpu"; shared=true)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">Pkg.add("CUDA")</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">using CUDA</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">CUDA.versioninfo()</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
@@ -601,8 +673,8 @@ Tjusila, Gennesaret Kharistio, Alexander Hoen, Nils-Christian Kempke, et al. 202
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>stats given for the NVIDIA L40, similar to the one installed on ENPC’s cluster<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>stats given for the NVIDIA L40, similar to the one installed on ENPC’s cluster<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>stats given for the NVIDIA L40s cards installed on ENPC’s cluster<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>stats given for the NVIDIA L40s cards installed on ENPC’s cluster<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
