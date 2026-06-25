@@ -88,7 +88,7 @@
     "href": "gpu.html#sparse-matrices-and-graphs",
     "title": "GPU",
     "section": "Sparse matrices and graphs",
-    "text": "Sparse matrices and graphs\n\nSparse matrix formats\n\nCOO\nCSR\nSELL\nHybrid\n\n\n\nSpMV kernels\n\nCOO: atomic operations\nCSR: load balancing issues\nSELL: great but dangerous for high-degree\n\n\n\nGraph algorithms with linear algebra\n\nGraphBLAS specification\nCustom semirings\nExample: BFS"
+    "text": "Sparse matrices and graphs\n\nSparse matrix formats\n\nCOO (coordinate-wise)\nCSR (row-wise)\nELL (CSR + data padding + transposition)\nSELL (ELL by chunk)\nJDS (CSR + sort by row length)\nHybrids\nTradeoffs:\n\nspace efficiency\naccessibility (coefficient, row, column)\nflexibility (modifying, appending)\n\n\n\n\nSpMV kernels\n\nCOO (one thread per input coefficient): atomic operations\nCSR (one thread per input row): load balancing, divergence and coalescing issues\nELL (one thread per input row): low space efficiency, divergence issues\n\n\n\nAre fancy sparse formats worth it?\n\nFor one-off computations, no\nFor repeated computations, yes\nEither way, SpMV much less efficient than dense equivalent: no data reuse\n\n\n\nGraph algorithms with linear algebra\n\nGraphBLAS specification\nCustom semirings\nExample: BFS"
   },
   {
     "objectID": "gpu.html#linear-and-integer-programming",

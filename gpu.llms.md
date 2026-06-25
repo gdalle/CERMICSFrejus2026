@@ -142,16 +142,28 @@ end
 
 ### Sparse matrix formats
 
-- COO
-- CSR
-- SELL
-- Hybrid
+- COO (coordinate-wise)
+- CSR (row-wise)
+- ELL (CSR + data padding + transposition)
+- SELL (ELL by chunk)
+- JDS (CSR + sort by row length)
+- Hybrids
+- Tradeoffs:
+  - space efficiency
+  - accessibility (coefficient, row, column)
+  - flexibility (modifying, appending)
 
 ### SpMV kernels
 
-- COO: atomic operations
-- CSR: load balancing issues
-- SELL: great but dangerous for high-degree
+- COO (one thread per input coefficient): atomic operations
+- CSR (one thread per input row): load balancing, divergence and coalescing issues
+- ELL (one thread per input row): low space efficiency, divergence issues
+
+### Are fancy sparse formats worth it?
+
+- For one-off computations, no
+- For repeated computations, yes
+- Either way, SpMV much less efficient than dense equivalent: no data reuse
 
 ### Graph algorithms with linear algebra
 

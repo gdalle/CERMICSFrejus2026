@@ -229,6 +229,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#sparse-matrix-formats" id="toc-sparse-matrix-formats" class="nav-link" data-scroll-target="#sparse-matrix-formats">Sparse matrix formats</a></li>
   <li><a href="#spmv-kernels" id="toc-spmv-kernels" class="nav-link" data-scroll-target="#spmv-kernels">SpMV kernels</a></li>
+  <li><a href="#are-fancy-sparse-formats-worth-it" id="toc-are-fancy-sparse-formats-worth-it" class="nav-link" data-scroll-target="#are-fancy-sparse-formats-worth-it">Are fancy sparse formats worth it?</a></li>
   <li><a href="#graph-algorithms-with-linear-algebra" id="toc-graph-algorithms-with-linear-algebra" class="nav-link" data-scroll-target="#graph-algorithms-with-linear-algebra">Graph algorithms with linear algebra</a></li>
   </ul></li>
   <li><a href="#linear-and-integer-programming" id="toc-linear-and-integer-programming" class="nav-link" data-scroll-target="#linear-and-integer-programming">Linear and integer programming</a>
@@ -455,18 +456,34 @@ window.Quarto = {
 <section id="sparse-matrix-formats" class="level3">
 <h3 class="anchored" data-anchor-id="sparse-matrix-formats">Sparse matrix formats</h3>
 <ul>
-<li>COO</li>
-<li>CSR</li>
-<li>SELL</li>
-<li>Hybrid</li>
+<li>COO (coordinate-wise)</li>
+<li>CSR (row-wise)</li>
+<li>ELL (CSR + data padding + transposition)</li>
+<li>SELL (ELL by chunk)</li>
+<li>JDS (CSR + sort by row length)</li>
+<li>Hybrids</li>
+<li>Tradeoffs:
+<ul>
+<li>space efficiency</li>
+<li>accessibility (coefficient, row, column)</li>
+<li>flexibility (modifying, appending)</li>
+</ul></li>
 </ul>
 </section>
 <section id="spmv-kernels" class="level3">
 <h3 class="anchored" data-anchor-id="spmv-kernels">SpMV kernels</h3>
 <ul>
-<li>COO: atomic operations</li>
-<li>CSR: load balancing issues</li>
-<li>SELL: great but dangerous for high-degree</li>
+<li>COO (one thread per input coefficient): atomic operations</li>
+<li>CSR (one thread per input row): load balancing, divergence and coalescing issues</li>
+<li>ELL (one thread per input row): low space efficiency, divergence issues</li>
+</ul>
+</section>
+<section id="are-fancy-sparse-formats-worth-it" class="level3">
+<h3 class="anchored" data-anchor-id="are-fancy-sparse-formats-worth-it">Are fancy sparse formats worth it?</h3>
+<ul>
+<li>For one-off computations, no</li>
+<li>For repeated computations, yes</li>
+<li>Either way, SpMV much less efficient than dense equivalent: no data reuse</li>
 </ul>
 </section>
 <section id="graph-algorithms-with-linear-algebra" class="level3">
@@ -1146,7 +1163,7 @@ Tjusila, Gennesaret Kharistio, Alexander Hoen, Nils-Christian Kempke, et al. 202
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Copyright 2025, Guillaume Dalle</p>
+<p>Copyright 2026, Guillaume Dalle</p>
 <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gdalle/CERMICSFrejus2026/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
