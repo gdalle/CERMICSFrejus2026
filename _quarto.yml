@@ -7,6 +7,10 @@ website:
     left:
       - autodiff.qmd
       - gpu.qmd
+  llms-txt: true
+  page-footer: "Copyright 2025, Guillaume Dalle" 
+  repo-url: https://github.com/gdalle/CERMICSFrejus2026
+  repo-actions: [issue]
 
 format:
   html:
