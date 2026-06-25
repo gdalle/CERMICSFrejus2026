@@ -1,5 +1,13 @@
 ---
 title: "Computational tools for decision-focused learning"
+bibliography: index.bib
 ---
 
-This page contains material for two sessions of a summer school organized by CERMICS in Fréjus in 2026.
+The present page contains material for a summer school organized by CERMICS in Fréjus in 2026.
+The goal is to present two central ideas, which enabled the deep learning revolution and should be used more widely in operations research: [automatic differentiation](./autodiff.qmd) and [GPU programming](./gpu.qmd).
+
+These are very rough notes, useful mostly as reminders.
+If you want to learn this stuff for yourself, read the books by @blondelElementsDifferentiableProgramming2025 and @hwuProgrammingMassivelyParallel2022.
+
+::: {#refs}
+:::

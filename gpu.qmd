@@ -7,38 +7,90 @@ bibliography: gpu.bib
 
 ### Why GPUs?
 
-- Initially designed for computer graphics
-- 2012: proof that they can be used in deep learning
-- Most supercomputing capabilities are GPU-driven
+- Single cores are no longer getting much faster, computing power increases from parallelism
+- Initially designed for computer graphics, processing pixels in parallel
+- CUDA (2007) made the switch to a general programming interface
+- Alexnet (2012) showed they can be used in deep learning
+- Most supercomputing capabilities are now GPU-driven, but they are in every laptop too
 
 ### CPU versus GPU
 
-- CPU: few cores, complex operations, low latency, large memory
-- GPU: many cores, simple operations, high throughput, small memory
-- CPU is the _host_, GPU is the _device_
+- CPU: few cores optimized for sequential, complex operations, low latency, large memory
+- GPU: many cores optimized for parallel, simple operations, high throughput, small memory
+- GPUs perform many floating point operations per second (100 TFLOPS on Float32, 100x that of CPUs)[^1]
+- GPUs have high memory bandwidth (1000 GB/s, 10x that of CPUs)
+
+[^1]: stats given for the NVIDIA L40, similar to the one installed on ENPC's cluster
+
+### Challenges of parallelization
+
+- Additional complexity: performing more work
+- Memory-bound applications: number of FLOPs per byte is low
+- Heterogeneous, unpredictable input data
+- Synchronization operations
+
+## How a GPU works
+
+### Communication
+
+- CPU is the host, GPUs are the devices
+- Device code is composed of kernels, executed in a data-parallel manner
+- Kernels are interlaced with host instructions, launched asynchronously
+- Transfer of data or instructions between CPU and GPU is expensive
 
 ### GPU structure
 
+- Grid of blocks (1D, 2D or 3D), each with up to 1024 threads
+- Within a block, threads are executed in lockstep (inside warps of 32)
+- Single Instruction, Multiple Thread paradigm
+- The number of blocks actually executed in parallel is hardware-dependent
+
 ### Memory hierarchy
 
-## Writing GPU kernels
+- Host memory + 3 kinds of on-device memory
+- Global memory (or DRAM), common across blocks
+
+## GPU kernels
+
+### Contents of a kernel
+
+- Each thread knows its block and thread ID, which replaces a loop
+```julia
+using KernelAbstractions
+@kernel function mul2_kernel(A)
+  I = @index(Global)
+  A[I] = 2 * A[I]
+end
+```
+- Grid and block shapes are specified by host at kernel launch
+```julia
+import CUDA
+dev = CUDABackend()
+A = ones(1024, 1024)
+ev = mul2_kernel(dev, 64)(A, ndrange=size(A))
+synchronize(dev)
+all(A .== 2.0)
+```
+
+### Launching kernels
+
+- Kernel launch has overhead
+- Kernel fusion at program scale is essential
 
 ## Sparse matrices and graphs
 
 ### Sparse matrix formats
 
 - COO
-- CSC
 - CSR
 - SELL
 - Hybrid
 
 ### SpMV kernels
 
-### Challenges
-
-- Load balancing
-- Atomic operations
+- COO: atomic operations
+- CSR: load balancing issues
+- SELL: great but dangerous for high-degree
 
 ### Graph algorithms with linear algebra
 
@@ -135,7 +187,7 @@ Modeling (including batched):
 - [BatchNLPKernels.jl](https://github.com/LearningToOptimize/BatchNLPKernels.jl)
 - Experimental: [BatchOptInterface.jl](https://github.com/klamike/BatchOptInterface.jl), [BatchQuadraticModels.jl](https://github.com/klamike/BatchQuadraticModels.jl)
 
-[^1]: see the [batching issue](https://github.com/jump-dev/MathOptInterface.jl/issues/2904)
+[^2]: see the [batching issue](https://github.com/jump-dev/MathOptInterface.jl/issues/2904)
 
 Solvers:
 
