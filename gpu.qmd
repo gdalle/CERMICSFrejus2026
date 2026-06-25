@@ -25,7 +25,7 @@ bibliography: gpu.bib
 ### Challenges of parallelization
 
 - Additional complexity: performing more work
-- Memory-bound applications: number of FLOPs per byte is low
+- Memory-bound applications
 - Heterogeneous, unpredictable input data
 - Synchronization operations
 
@@ -57,10 +57,31 @@ bibliography: gpu.bib
 - In the presence of control flow, all paths are taken sequentially: one pass for `if` then one pass for `else`
 - Typical example is boundary conditions (only affects one warp)
 
+## Performance considerations
+
+### Roofline model
+
+- Key quantity: compute to global memory access ratio (or computational intensity), expressed in FLOP/B
+- Example: matrix multiplication
+- Roofline diagram: computational intensity (FLOPS/B) as X axis, computational throughput (GFLOPS) as Y axis
+- Two regimes: memory-bound ($\alpha$ = peak bandwidth in B/s times computational throughput) then compute-bound ($\beta$ = peak throughput in GB/s)
+
 ### Memory hierarchy
 
-- Host memory + 3 kinds of on-device memory
-- Global memory (or DRAM), common across blocks
+- Host memory + several kinds of on-device memory
+- Global memory (or DRAM), per grid
+  - Constant memory, part of global but read-only
+  - Local memory, part of global but owned by thread
+- Shared (or scratchpad) memory, per block
+- Registers, per thread
+
+### Fighting memory limits
+
+- Improve data reuse to reach peak FLOPS
+- Use shared memory as scratchpad to store data from global memory
+- Coalesce global memory accesses (make sure adjacent threads access adjacent memory locations)
+- Example: tiling for matmul
+- Warps are ordered linearly (column-major vs row-major, depending on the language)
 
 ### Resource allocation
 
