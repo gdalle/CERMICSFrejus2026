@@ -125,6 +125,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -182,7 +211,12 @@ div.csl-indent {
   <li><a href="#theoretical-structure" id="toc-theoretical-structure" class="nav-link" data-scroll-target="#theoretical-structure">Theoretical structure</a></li>
   <li><a href="#hardware-structure" id="toc-hardware-structure" class="nav-link" data-scroll-target="#hardware-structure">Hardware structure</a></li>
   <li><a href="#warps-and-divergence" id="toc-warps-and-divergence" class="nav-link" data-scroll-target="#warps-and-divergence">Warps and divergence</a></li>
+  </ul></li>
+  <li><a href="#performance-considerations" id="toc-performance-considerations" class="nav-link" data-scroll-target="#performance-considerations">Performance considerations</a>
+  <ul class="collapse">
+  <li><a href="#roofline-model" id="toc-roofline-model" class="nav-link" data-scroll-target="#roofline-model">Roofline model</a></li>
   <li><a href="#memory-hierarchy" id="toc-memory-hierarchy" class="nav-link" data-scroll-target="#memory-hierarchy">Memory hierarchy</a></li>
+  <li><a href="#fighting-memory-limits" id="toc-fighting-memory-limits" class="nav-link" data-scroll-target="#fighting-memory-limits">Fighting memory limits</a></li>
   <li><a href="#resource-allocation" id="toc-resource-allocation" class="nav-link" data-scroll-target="#resource-allocation">Resource allocation</a></li>
   </ul></li>
   <li><a href="#gpu-kernels" id="toc-gpu-kernels" class="nav-link" data-scroll-target="#gpu-kernels">GPU kernels</a>
@@ -279,7 +313,7 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="challenges-of-parallelization">Challenges of parallelization</h3>
 <ul>
 <li>Additional complexity: performing more work</li>
-<li>Memory-bound applications: number of FLOPs per byte is low</li>
+<li>Memory-bound applications</li>
 <li>Heterogeneous, unpredictable input data</li>
 <li>Synchronization operations</li>
 </ul>
@@ -321,11 +355,39 @@ div.csl-indent {
 <li>Typical example is boundary conditions (only affects one warp)</li>
 </ul>
 </section>
+</section>
+<section id="performance-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="performance-considerations">Performance considerations</h2>
+<section id="roofline-model" class="level3">
+<h3 class="anchored" data-anchor-id="roofline-model">Roofline model</h3>
+<ul>
+<li>Key quantity: compute to global memory access ratio (or computational intensity), expressed in FLOP/B</li>
+<li>Example: matrix multiplication</li>
+<li>Roofline diagram: computational intensity (FLOPS/B) as X axis, computational throughput (GFLOPS) as Y axis</li>
+<li>Two regimes: memory-bound (<span class="math inline">\(\alpha\)</span> = peak bandwidth in B/s times computational throughput) then compute-bound (<span class="math inline">\(\beta\)</span> = peak throughput in GB/s)</li>
+</ul>
+</section>
 <section id="memory-hierarchy" class="level3">
 <h3 class="anchored" data-anchor-id="memory-hierarchy">Memory hierarchy</h3>
 <ul>
-<li>Host memory + 3 kinds of on-device memory</li>
-<li>Global memory (or DRAM), common across blocks</li>
+<li>Host memory + several kinds of on-device memory</li>
+<li>Global memory (or DRAM), per grid
+<ul>
+<li>Constant memory, part of global but read-only</li>
+<li>Local memory, part of global but owned by thread</li>
+</ul></li>
+<li>Shared (or scratchpad) memory, per block</li>
+<li>Registers, per thread</li>
+</ul>
+</section>
+<section id="fighting-memory-limits" class="level3">
+<h3 class="anchored" data-anchor-id="fighting-memory-limits">Fighting memory limits</h3>
+<ul>
+<li>Improve data reuse to reach peak FLOPS</li>
+<li>Use shared memory as scratchpad to store data from global memory</li>
+<li>Coalesce global memory accesses (make sure adjacent threads access adjacent memory locations)</li>
+<li>Example: tiling for matmul</li>
+<li>Warps are ordered linearly (column-major vs row-major, depending on the language)</li>
 </ul>
 </section>
 <section id="resource-allocation" class="level3">
