@@ -358,4 +358,4 @@ Tjusila, Gennesaret Kharistio, Alexander Hoen, Nils-Christian Kempke, et al. 202
 
 [^1]: stats given for the NVIDIA L40s cards installed on ENPC’s cluster
 
-[^2]: stats given for the NVIDIA L40s cards installed on ENPC’s cluster
+[^2]: see the [batching issue](https://github.com/jump-dev/MathOptInterface.jl/issues/2904)
