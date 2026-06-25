@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -139,15 +174,23 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#why-gpus" id="toc-why-gpus" class="nav-link" data-scroll-target="#why-gpus">Why GPUs?</a></li>
   <li><a href="#cpu-versus-gpu" id="toc-cpu-versus-gpu" class="nav-link" data-scroll-target="#cpu-versus-gpu">CPU versus GPU</a></li>
+  <li><a href="#challenges-of-parallelization" id="toc-challenges-of-parallelization" class="nav-link" data-scroll-target="#challenges-of-parallelization">Challenges of parallelization</a></li>
+  </ul></li>
+  <li><a href="#how-a-gpu-works" id="toc-how-a-gpu-works" class="nav-link" data-scroll-target="#how-a-gpu-works">How a GPU works</a>
+  <ul class="collapse">
+  <li><a href="#communication" id="toc-communication" class="nav-link" data-scroll-target="#communication">Communication</a></li>
   <li><a href="#gpu-structure" id="toc-gpu-structure" class="nav-link" data-scroll-target="#gpu-structure">GPU structure</a></li>
   <li><a href="#memory-hierarchy" id="toc-memory-hierarchy" class="nav-link" data-scroll-target="#memory-hierarchy">Memory hierarchy</a></li>
   </ul></li>
-  <li><a href="#writing-gpu-kernels" id="toc-writing-gpu-kernels" class="nav-link" data-scroll-target="#writing-gpu-kernels">Writing GPU kernels</a></li>
+  <li><a href="#gpu-kernels" id="toc-gpu-kernels" class="nav-link" data-scroll-target="#gpu-kernels">GPU kernels</a>
+  <ul class="collapse">
+  <li><a href="#contents-of-a-kernel" id="toc-contents-of-a-kernel" class="nav-link" data-scroll-target="#contents-of-a-kernel">Contents of a kernel</a></li>
+  <li><a href="#launching-kernels" id="toc-launching-kernels" class="nav-link" data-scroll-target="#launching-kernels">Launching kernels</a></li>
+  </ul></li>
   <li><a href="#sparse-matrices-and-graphs" id="toc-sparse-matrices-and-graphs" class="nav-link" data-scroll-target="#sparse-matrices-and-graphs">Sparse matrices and graphs</a>
   <ul class="collapse">
   <li><a href="#sparse-matrix-formats" id="toc-sparse-matrix-formats" class="nav-link" data-scroll-target="#sparse-matrix-formats">Sparse matrix formats</a></li>
   <li><a href="#spmv-kernels" id="toc-spmv-kernels" class="nav-link" data-scroll-target="#spmv-kernels">SpMV kernels</a></li>
-  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
   <li><a href="#graph-algorithms-with-linear-algebra" id="toc-graph-algorithms-with-linear-algebra" class="nav-link" data-scroll-target="#graph-algorithms-with-linear-algebra">Graph algorithms with linear algebra</a></li>
   </ul></li>
   <li><a href="#linear-and-integer-programming" id="toc-linear-and-integer-programming" class="nav-link" data-scroll-target="#linear-and-integer-programming">Linear and integer programming</a>
@@ -208,28 +251,89 @@ div.csl-indent {
 <section id="why-gpus" class="level3">
 <h3 class="anchored" data-anchor-id="why-gpus">Why GPUs?</h3>
 <ul>
-<li>Initially designed for computer graphics</li>
-<li>2012: proof that they can be used in deep learning</li>
-<li>Most supercomputing capabilities are GPU-driven</li>
+<li>Single cores are no longer getting much faster, computing power increases from parallelism</li>
+<li>Initially designed for computer graphics, processing pixels in parallel</li>
+<li>CUDA (2007) made the switch to a general programming interface</li>
+<li>Alexnet (2012) showed they can be used in deep learning</li>
+<li>Most supercomputing capabilities are now GPU-driven, but they are in every laptop too</li>
 </ul>
 </section>
 <section id="cpu-versus-gpu" class="level3">
 <h3 class="anchored" data-anchor-id="cpu-versus-gpu">CPU versus GPU</h3>
 <ul>
-<li>CPU: few cores, complex operations, low latency, large memory</li>
-<li>GPU: many cores, simple operations, high throughput, small memory</li>
-<li>CPU is the <em>host</em>, GPU is the <em>device</em></li>
+<li>CPU: few cores optimized for sequential, complex operations, low latency, large memory</li>
+<li>GPU: many cores optimized for parallel, simple operations, high throughput, small memory</li>
+<li>GPUs perform many floating point operations per second (100 TFLOPS on Float32, 100x that of CPUs)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>GPUs have high memory bandwidth (1000 GB/s, 10x that of CPUs)</li>
+</ul>
+</section>
+<section id="challenges-of-parallelization" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-of-parallelization">Challenges of parallelization</h3>
+<ul>
+<li>Additional complexity: performing more work</li>
+<li>Memory-bound applications: number of FLOPs per byte is low</li>
+<li>Heterogeneous, unpredictable input data</li>
+<li>Synchronization operations</li>
+</ul>
+</section>
+</section>
+<section id="how-a-gpu-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-a-gpu-works">How a GPU works</h2>
+<section id="communication" class="level3">
+<h3 class="anchored" data-anchor-id="communication">Communication</h3>
+<ul>
+<li>CPU is the host, GPUs are the devices</li>
+<li>Device code is composed of kernels, executed in a data-parallel manner</li>
+<li>Kernels are interlaced with host instructions, launched asynchronously</li>
+<li>Transfer of data or instructions between CPU and GPU is expensive</li>
 </ul>
 </section>
 <section id="gpu-structure" class="level3">
 <h3 class="anchored" data-anchor-id="gpu-structure">GPU structure</h3>
+<ul>
+<li>Grid of blocks (1D, 2D or 3D), each with up to 1024 threads</li>
+<li>Within a block, threads are executed in lockstep (inside warps of 32)</li>
+<li>Single Instruction, Multiple Thread paradigm</li>
+<li>The number of blocks actually executed in parallel is hardware-dependent</li>
+</ul>
 </section>
 <section id="memory-hierarchy" class="level3">
 <h3 class="anchored" data-anchor-id="memory-hierarchy">Memory hierarchy</h3>
+<ul>
+<li>Host memory + 3 kinds of on-device memory</li>
+<li>Global memory (or DRAM), common across blocks</li>
+</ul>
 </section>
 </section>
-<section id="writing-gpu-kernels" class="level2">
-<h2 class="anchored" data-anchor-id="writing-gpu-kernels">Writing GPU kernels</h2>
+<section id="gpu-kernels" class="level2">
+<h2 class="anchored" data-anchor-id="gpu-kernels">GPU kernels</h2>
+<section id="contents-of-a-kernel" class="level3">
+<h3 class="anchored" data-anchor-id="contents-of-a-kernel">Contents of a kernel</h3>
+<ul>
+<li>Each thread knows its block and thread ID, which replaces a loop</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">KernelAbstractions</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@kernel</span> <span class="kw">function</span> <span class="fu">mul2_kernel</span>(A)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  I <span class="op">=</span> <span class="pp">@index</span>(Global)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  A[I] <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> A[I]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Grid and block shapes are specified by host at kernel launch</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">CUDA</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dev <span class="op">=</span> <span class="fu">CUDABackend</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">ones</span>(<span class="fl">1024</span>, <span class="fl">1024</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ev <span class="op">=</span> <span class="fu">mul2_kernel</span>(dev, <span class="fl">64</span>)(A, ndrange<span class="op">=</span><span class="fu">size</span>(A))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">synchronize</span>(dev)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(A <span class="op">.==</span> <span class="fl">2.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="launching-kernels" class="level3">
+<h3 class="anchored" data-anchor-id="launching-kernels">Launching kernels</h3>
+<ul>
+<li>Kernel launch has overhead</li>
+<li>Kernel fusion at program scale is essential</li>
+</ul>
+</section>
 </section>
 <section id="sparse-matrices-and-graphs" class="level2">
 <h2 class="anchored" data-anchor-id="sparse-matrices-and-graphs">Sparse matrices and graphs</h2>
@@ -237,7 +341,6 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="sparse-matrix-formats">Sparse matrix formats</h3>
 <ul>
 <li>COO</li>
-<li>CSC</li>
 <li>CSR</li>
 <li>SELL</li>
 <li>Hybrid</li>
@@ -245,12 +348,10 @@ div.csl-indent {
 </section>
 <section id="spmv-kernels" class="level3">
 <h3 class="anchored" data-anchor-id="spmv-kernels">SpMV kernels</h3>
-</section>
-<section id="challenges" class="level3">
-<h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
 <ul>
-<li>Load balancing</li>
-<li>Atomic operations</li>
+<li>COO: atomic operations</li>
+<li>CSR: load balancing issues</li>
+<li>SELL: great but dangerous for high-degree</li>
 </ul>
 </section>
 <section id="graph-algorithms-with-linear-algebra" class="level3">
@@ -370,7 +471,7 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="mathematical-programming">Mathematical programming</h3>
 <p>Modeling (including batched):</p>
 <ul>
-<li><a href="https://github.com/jump-dev/JuMP.jl">JuMP.jl</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><a href="https://github.com/jump-dev/JuMP.jl">JuMP.jl</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 <li><a href="https://github.com/jump-dev/Convex.jl">Convex.jl</a></li>
 <li><a href="https://github.com/exanauts/ExaModels.jl">ExaModels.jl</a></li>
 <li><a href="https://github.com/LearningToOptimize/BatchNLPKernels.jl">BatchNLPKernels.jl</a></li>
@@ -500,7 +601,8 @@ Tjusila, Gennesaret Kharistio, Alexander Hoen, Nils-Christian Kempke, et al. 202
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>see the <a href="https://github.com/jump-dev/MathOptInterface.jl/issues/2904">batching issue</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>stats given for the NVIDIA L40, similar to the one installed on ENPC’s cluster<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>stats given for the NVIDIA L40, similar to the one installed on ENPC’s cluster<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
